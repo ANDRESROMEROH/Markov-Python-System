@@ -1,0 +1,12 @@
+UBUNTU Terminal Commands (will need to be executed in the same order):
+
+sudo apt-get install python3-pyqt5  
+sudo apt-get install pyqt5-dev-tools
+sudo apt-get install qttools5-dev-tools
+
+To convert UI files to PY extension: pyuic4 USERINTERFACENAME.ui -o OUTPUTFILENAME.py -x
+
+Windows 7/8/10 CMD Commands (will need to be executed in the same order)
+
+pip install PyQt5
+pip install PyQt5-tools
