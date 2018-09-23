@@ -24,7 +24,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QPlainTextEdit" name="plainTextEdit_2">
+   <widget class="QPlainTextEdit" name="resultsField">
     <property name="enabled">
      <bool>false</bool>
     </property>
@@ -37,7 +37,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="oneStepBt">
     <property name="geometry">
      <rect>
       <x>690</x>
@@ -50,7 +50,7 @@
      <string>One Step</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_2">
+   <widget class="QPushButton" name="runBt">
     <property name="geometry">
      <rect>
       <x>580</x>
@@ -73,7 +73,7 @@
      <x>0</x>
      <y>0</y>
      <width>802</width>
-     <height>25</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

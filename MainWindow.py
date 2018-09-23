@@ -1,80 +1,57 @@
-from PyQt4 import QtCore, QtGui
-import Markov
-# from Markov import Markov_App
-
-
-try:
-    _fromUtf8 = QtCore.QString.fromUtf8
-except AttributeError:
-    def _fromUtf8(s):
-        return s
-
-
-try:
-    _encoding = QtGui.QApplication.UnicodeUTF8
-    def _translate(context, text, disambig):
-        return QtGui.QApplication.translate(context, text, disambig, _encoding)
-except AttributeError:
-    def _translate(context, text, disambig):
-        return QtGui.QApplication.translate(context, text, disambig)
-
+from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QFileDialog
 
 class Ui_MainWindow(object):
-    
-
     def setupUi(self, MainWindow):
-
-        MainWindow.setObjectName(_fromUtf8("MainWindow"))
+        MainWindow.setObjectName("MainWindow")
         MainWindow.resize(802, 632)
 
-        self.centralwidget = QtGui.QWidget(MainWindow)
-        self.centralwidget.setObjectName(_fromUtf8("centralwidget"))
-        self.plainTextEdit = QtGui.QPlainTextEdit(self.centralwidget)
+        self.centralwidget = QtWidgets.QWidget(MainWindow)
+        self.centralwidget.setObjectName("centralwidget")
+        self.plainTextEdit = QtWidgets.QPlainTextEdit(self.centralwidget)
         self.plainTextEdit.setGeometry(QtCore.QRect(10, 50, 781, 251))
-        self.plainTextEdit.setObjectName(_fromUtf8("plainTextEdit"))
-        self.results = QtGui.QPlainTextEdit(self.centralwidget)
-        self.results.setEnabled(False)
-        self.results.setGeometry(QtCore.QRect(10, 310, 781, 261))
-        self.results.setObjectName(_fromUtf8("results"))
-        self.runBt = QtGui.QPushButton(self.centralwidget)
-        self.runBt.setGeometry(QtCore.QRect(690, 10, 97, 31))
-        self.runBt.setObjectName(_fromUtf8("runBt"))
-        self.oneStepBt = QtGui.QPushButton(self.centralwidget)
-        self.oneStepBt.setGeometry(QtCore.QRect(580, 10, 97, 31))
-        self.oneStepBt.setAutoFillBackground(False)
-        self.oneStepBt.setObjectName(_fromUtf8("oneStepBt"))
-
+        self.plainTextEdit.setObjectName("plainTextEdit")
+        self.resultsField = QtWidgets.QPlainTextEdit(self.centralwidget)
+        self.resultsField.setEnabled(False)
+        self.resultsField.setGeometry(QtCore.QRect(10, 310, 781, 261))
+        self.resultsField.setObjectName("resultsField")
+        self.oneStepBt = QtWidgets.QPushButton(self.centralwidget)
+        self.oneStepBt.setGeometry(QtCore.QRect(690, 10, 97, 31))
+        self.oneStepBt.setObjectName("oneStepBt")
+        self.runBt = QtWidgets.QPushButton(self.centralwidget)
+        self.runBt.setGeometry(QtCore.QRect(580, 10, 97, 31))
+        self.runBt.setAutoFillBackground(False)
+        self.runBt.setObjectName("runBt")
         MainWindow.setCentralWidget(self.centralwidget)
 
-        self.menubar = QtGui.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 802, 25))
-        self.menubar.setObjectName(_fromUtf8("menubar"))
-        self.menuFile = QtGui.QMenu(self.menubar)
-        self.menuFile.setObjectName(_fromUtf8("menuFile"))
-        self.menuInput = QtGui.QMenu(self.menubar)
-        self.menuInput.setObjectName(_fromUtf8("menuInput"))
-        self.menuTools = QtGui.QMenu(self.menubar)
-        self.menuTools.setObjectName(_fromUtf8("menuTools"))
-
+        self.menubar = QtWidgets.QMenuBar(MainWindow)
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 802, 22))
+        self.menubar.setObjectName("menubar")
+        self.menuFile = QtWidgets.QMenu(self.menubar)
+        self.menuFile.setObjectName("menuFile")
+        self.menuInput = QtWidgets.QMenu(self.menubar)
+        self.menuInput.setObjectName("menuInput")
+        self.menuTools = QtWidgets.QMenu(self.menubar)
+        self.menuTools.setObjectName("menuTools")
         MainWindow.setMenuBar(self.menubar)
 
-        self.statusbar = QtGui.QStatusBar(MainWindow)
-        self.statusbar.setObjectName(_fromUtf8("statusbar"))
-
+        self.statusbar = QtWidgets.QStatusBar(MainWindow)
+        self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
 
-        self.actionNew = QtGui.QAction(MainWindow)
-        self.actionNew.setObjectName(_fromUtf8("actionNew"))
-        self.actionOpen = QtGui.QAction(MainWindow)
-        self.actionOpen.setObjectName(_fromUtf8("actionOpen"))
-        self.actionSave = QtGui.QAction(MainWindow)
-        self.actionSave.setObjectName(_fromUtf8("actionSave"))
-        self.actionSimple_Input = QtGui.QAction(MainWindow)
-        self.actionSimple_Input.setObjectName(_fromUtf8("actionSimple_Input"))
-        self.actionMultiple_Inputs = QtGui.QAction(MainWindow)
-        self.actionMultiple_Inputs.setObjectName(_fromUtf8("actionMultiple_Inputs"))
-        self.actionPalette = QtGui.QAction(MainWindow)
-        self.actionPalette.setObjectName(_fromUtf8("actionPalette"))
+        self.actionNew = QtWidgets.QAction(MainWindow)
+        self.actionNew.setObjectName("actionNew")
+        self.actionOpen = QtWidgets.QAction(MainWindow)
+        self.actionOpen.setMenuRole(QtWidgets.QAction.NoRole)
+        self.actionOpen.setObjectName("actionOpen")
+        self.actionSave = QtWidgets.QAction(MainWindow)
+        self.actionSave.setObjectName("actionSave")
+        self.actionSimple_Input = QtWidgets.QAction(MainWindow)
+        self.actionSimple_Input.setObjectName("actionSimple_Input")
+        self.actionMultiple_Inputs = QtWidgets.QAction(MainWindow)
+        self.actionMultiple_Inputs.setObjectName("actionMultiple_Inputs")
+        self.actionPalette = QtWidgets.QAction(MainWindow)
+        self.actionPalette.setObjectName("actionPalette")
         self.menuFile.addAction(self.actionNew)
         self.menuFile.addSeparator()
         self.menuFile.addAction(self.actionOpen)
@@ -94,40 +71,39 @@ class Ui_MainWindow(object):
 
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-#END OF GUI SETUP
-
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow", None))
-        self.runBt.setText(_translate("MainWindow", "One Step", None))
-        self.oneStepBt.setText(_translate("MainWindow", "Run", None))
-        self.menuFile.setTitle(_translate("MainWindow", "File", None))
-        self.menuInput.setTitle(_translate("MainWindow", "Input", None))
-        self.menuTools.setTitle(_translate("MainWindow", "Tools", None))
-        self.actionNew.setText(_translate("MainWindow", "New", None))
-        self.actionOpen.setText(_translate("MainWindow", "Open", None))
-        self.actionSave.setText(_translate("MainWindow", "Save", None))
-        self.actionSimple_Input.setText(_translate("MainWindow", "Simple Input", None))
-        self.actionMultiple_Inputs.setText(_translate("MainWindow", "Multiple Inputs", None))
-        self.actionPalette.setText(_translate("MainWindow", "Palette", None))
-        
+        _translate = QtCore.QCoreApplication.translate
+        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        self.oneStepBt.setText(_translate("MainWindow", "One Step"))
+        self.runBt.setText(_translate("MainWindow", "Run"))
+        self.menuFile.setTitle(_translate("MainWindow", "File"))
+        self.menuInput.setTitle(_translate("MainWindow", "Input"))
+        self.menuTools.setTitle(_translate("MainWindow", "Tools"))
+        self.actionNew.setText(_translate("MainWindow", "New"))
+        self.actionOpen.setText(_translate("MainWindow", "Open"))
+        self.actionSave.setText(_translate("MainWindow", "Save"))
+        self.actionSimple_Input.setText(_translate("MainWindow", "Simple Input"))
+        self.actionMultiple_Inputs.setText(_translate("MainWindow", "Multiple Inputs"))
+        self.actionPalette.setText(_translate("MainWindow", "Palette"))
 
-#File Management Actions:
+
+    #File Management Actions:
 
     def file_open(self):
-        name = QtGui.QFileDialog.getOpenFileName(self.menuFile)
-        file = open(name,'r')
+        print(name)
+        file = open(name[0],'r')
 
         with file:
             text = file.read()
             self.plainTextEdit.setPlainText(text)
 
 
-
 if __name__ == "__main__":
     import sys
-    app = QtGui.QApplication(sys.argv)
-    MainWindow = QtGui.QMainWindow()
+    app = QtWidgets.QApplication(sys.argv)
+    MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())
+
