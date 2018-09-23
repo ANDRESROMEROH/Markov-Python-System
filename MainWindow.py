@@ -90,7 +90,7 @@ class Ui_MainWindow(object):
     #File Management Actions:
 
     def file_open(self):
-        print(name)
+        name = QFileDialog.getOpenFileName()
         file = open(name[0],'r')
 
         with file:
