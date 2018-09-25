@@ -1,10 +1,13 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QFileDialog
+from PyQt5.QtWidgets import *
+import os
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(802, 632)
+
+        self.currentFile = ""
 
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
@@ -46,6 +49,8 @@ class Ui_MainWindow(object):
         self.actionOpen.setObjectName("actionOpen")
         self.actionSave = QtWidgets.QAction(MainWindow)
         self.actionSave.setObjectName("actionSave")
+        self.actionSaveAs = QtWidgets.QAction(MainWindow)
+        self.actionSaveAs.setObjectName("actionSaveAs")
         self.actionSimple_Input = QtWidgets.QAction(MainWindow)
         self.actionSimple_Input.setObjectName("actionSimple_Input")
         self.actionMultiple_Inputs = QtWidgets.QAction(MainWindow)
@@ -53,10 +58,10 @@ class Ui_MainWindow(object):
         self.actionPalette = QtWidgets.QAction(MainWindow)
         self.actionPalette.setObjectName("actionPalette")
         self.menuFile.addAction(self.actionNew)
-        self.menuFile.addSeparator()
         self.menuFile.addAction(self.actionOpen)
         self.menuFile.addSeparator()
         self.menuFile.addAction(self.actionSave)
+        self.menuFile.addAction(self.actionSaveAs) 
         self.menuInput.addAction(self.actionSimple_Input)
         self.menuInput.addAction(self.actionMultiple_Inputs)
         self.menuTools.addAction(self.actionPalette)
@@ -68,12 +73,15 @@ class Ui_MainWindow(object):
 
         #FILE Menu Management:
         self.actionOpen.triggered.connect(self.file_open)
+        self.actionSaveAs.triggered.connect(self.file_saveAs)
+        self.actionNew.triggered.connect(self.file_new)
 
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
+        self.mainWindow = MainWindow
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Untitled"))
         self.oneStepBt.setText(_translate("MainWindow", "One Step"))
         self.runBt.setText(_translate("MainWindow", "Run"))
         self.menuFile.setTitle(_translate("MainWindow", "File"))
@@ -82,6 +90,7 @@ class Ui_MainWindow(object):
         self.actionNew.setText(_translate("MainWindow", "New"))
         self.actionOpen.setText(_translate("MainWindow", "Open"))
         self.actionSave.setText(_translate("MainWindow", "Save"))
+        self.actionSaveAs.setText(_translate("MainWindow", "Save As"))
         self.actionSimple_Input.setText(_translate("MainWindow", "Simple Input"))
         self.actionMultiple_Inputs.setText(_translate("MainWindow", "Multiple Inputs"))
         self.actionPalette.setText(_translate("MainWindow", "Palette"))
@@ -91,11 +100,55 @@ class Ui_MainWindow(object):
 
     def file_open(self):
         name = QFileDialog.getOpenFileName()
-        file = open(name[0],'r')
 
-        with file:
-            text = file.read()
-            self.plainTextEdit.setPlainText(text)
+        if name[0]:
+            try:
+                file = open(name[0],'r')
+
+                with file:
+                    text = file.read()
+                
+            except Exception as error:
+                raise Exception("There was an error with the file: ".format(error))
+
+
+    def file_saveAs(self):
+        information = self.plainTextEdit.toPlainText()
+        
+        if information:
+
+            path = QFileDialog.getSaveFileName(self.menuFile, 'Save As', os.getenv('HOME'), 'TXT(*.txt)')
+            
+            try:
+                file = open(path[0], 'w')
+
+                with file:    
+                    file.write(information)
+
+            except Exception as error:
+                raise Exception("There was an error saving the file: ".format(error))
+
+            self.currentFile = path[0]
+            self.mainWindow.setWindowTitle(file.name.split("/")[-1] + ".txt")
+        
+        else:
+            msg = QMessageBox(self.centralwidget)
+            msg.setText("You cannot save an empty file")
+            msg.setInformativeText("Please type something before saving")
+            msg.setWindowTitle("We are sorry!")
+            msg.exec_()
+
+
+    def file_save(self):
+        information = self.plainTextEdit.toPlainText()
+
+
+    
+    def file_new(self):
+        self.plainTextEdit.clear()
+
+    
+        
 
 
 if __name__ == "__main__":
