@@ -73,13 +73,15 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
 
         #FILE Menu Management:
-        self.actionOpen.triggered.connect(self.file_open)
-        self.actionSaveAs.triggered.connect(self.file_saveAs)
         self.actionNew.triggered.connect(self.file_new)
+        self.actionOpen.triggered.connect(self.file_open)
+        self.actionSave.triggered.connect(self.file_save)
+        self.actionSaveAs.triggered.connect(self.file_saveAs)
         
 
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         self.mainWindow = MainWindow
+
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -101,11 +103,11 @@ class Ui_MainWindow(object):
     #File Management Actions:
 
     def file_open(self):
-        name = QFileDialog.getOpenFileName()
+        path = QFileDialog.getOpenFileName()
 
-        if name[0]:
+        if path[0]:
             try:
-                file = open(name[0],'r')
+                file = open(path[0],'r')
 
                 with file:
                     text = file.read()
@@ -113,6 +115,9 @@ class Ui_MainWindow(object):
                 
             except Exception as error:
                 raise Exception("There was an error with the file: ".format(error))
+            
+            self.currentFile = path[0]
+            self.mainWindow.setWindowTitle(file.name.split("/")[-1])
 
 
     def file_saveAs(self):
@@ -145,9 +150,20 @@ class Ui_MainWindow(object):
     def file_save(self):
         information = self.plainTextEdit.toPlainText()
 
+        try:
+            file = open(self.currentFile, 'w')
+
+            with file:    
+                file.write(information)
+
+        except Exception as error:
+            raise Exception("There was an error saving the file: ".format(error))
+
     
     def file_new(self):
         self.plainTextEdit.clear()
+        self.currentFile = ""
+        self.mainWindow.setWindowTitle("Untitled")
 
     
 
