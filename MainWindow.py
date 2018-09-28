@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import *
 import os
 
 class Ui_MainWindow(object):
+    
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(802, 632)
@@ -75,6 +76,7 @@ class Ui_MainWindow(object):
         self.actionOpen.triggered.connect(self.file_open)
         self.actionSaveAs.triggered.connect(self.file_saveAs)
         self.actionNew.triggered.connect(self.file_new)
+        
 
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         self.mainWindow = MainWindow
@@ -107,6 +109,7 @@ class Ui_MainWindow(object):
 
                 with file:
                     text = file.read()
+                    self.plainTextEdit.setPlainText(text)
                 
             except Exception as error:
                 raise Exception("There was an error with the file: ".format(error))
@@ -129,7 +132,7 @@ class Ui_MainWindow(object):
                 raise Exception("There was an error saving the file: ".format(error))
 
             self.currentFile = path[0]
-            self.mainWindow.setWindowTitle(file.name.split("/")[-1] + ".txt")
+            self.mainWindow.setWindowTitle(file.name.split("/")[-1])
         
         else:
             msg = QMessageBox(self.centralwidget)
@@ -142,14 +145,11 @@ class Ui_MainWindow(object):
     def file_save(self):
         information = self.plainTextEdit.toPlainText()
 
-
     
     def file_new(self):
         self.plainTextEdit.clear()
 
     
-        
-
 
 if __name__ == "__main__":
     import sys
