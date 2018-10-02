@@ -9,29 +9,29 @@ class Ui_MainWindow(object):
     
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1022, 632)
+        MainWindow.resize(1014, 615)
 
         self.currentFile = ""
 
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.plainTextEdit = QtWidgets.QPlainTextEdit(self.centralwidget)
-        self.plainTextEdit.setGeometry(QtCore.QRect(10, 50, 781, 251))
+        self.plainTextEdit.setGeometry(QtCore.QRect(10, 10, 761, 251))
         self.plainTextEdit.setObjectName("plainTextEdit")
         self.resultsField = QtWidgets.QPlainTextEdit(self.centralwidget)
-        self.resultsField.setEnabled(False)
-        self.resultsField.setGeometry(QtCore.QRect(10, 310, 781, 261))
+        self.resultsField.setReadOnly(True)
+        self.resultsField.setGeometry(QtCore.QRect(10, 270, 761, 261))
         self.resultsField.setObjectName("resultsField")
         self.oneStepBt = QtWidgets.QPushButton(self.centralwidget)
-        self.oneStepBt.setGeometry(QtCore.QRect(690, 10, 97, 31))
+        self.oneStepBt.setGeometry(QtCore.QRect(130, 540, 97, 31))
         self.oneStepBt.setObjectName("oneStepBt")
         self.runBt = QtWidgets.QPushButton(self.centralwidget)
-        self.runBt.setGeometry(QtCore.QRect(580, 10, 97, 31))
+        self.runBt.setGeometry(QtCore.QRect(20, 540, 97, 31))
         self.runBt.setAutoFillBackground(False)
         self.runBt.setObjectName("runBt")
         MainWindow.setCentralWidget(self.centralwidget)
         self.groupPalette = QtWidgets.QGroupBox(self.centralwidget)
-        self.groupPalette.setGeometry(QtCore.QRect(800, 30, 211, 271))
+        self.groupPalette.setGeometry(QtCore.QRect(790, 10, 211, 271))
         self.groupPalette.setObjectName("groupPalette")
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 802, 22))
@@ -154,6 +154,11 @@ class Ui_MainWindow(object):
         self.arrowbtn = QtWidgets.QPushButton(self.groupPalette)
         self.arrowbtn.setGeometry(QtCore.QRect(60, 230, 89, 25))
         self.arrowbtn.setObjectName("arrowbtn")
+        self.line = QtWidgets.QFrame(self.centralwidget)
+        self.line.setGeometry(QtCore.QRect(770, 0, 20, 531))
+        self.line.setFrameShape(QtWidgets.QFrame.VLine)
+        self.line.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.line.setObjectName("line")
 
         #FILE Menu Management:
         self.actionNew.triggered.connect(self.file_new)
