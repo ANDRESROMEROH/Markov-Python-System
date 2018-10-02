@@ -9,24 +9,30 @@ class Ui_MainWindow(object):
     
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.setFixedSize(1014, 615)
+        MainWindow.setFixedSize(1014, 605)
 
         self.currentFile = ""
 
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.plainTextEdit = QtWidgets.QPlainTextEdit(self.centralwidget)
-        self.plainTextEdit.setGeometry(QtCore.QRect(10, 10, 761, 251))
+        self.plainTextEdit.setGeometry(QtCore.QRect(10, 30, 761, 251))
         self.plainTextEdit.setObjectName("plainTextEdit")
         self.resultsField = QtWidgets.QPlainTextEdit(self.centralwidget)
         self.resultsField.setReadOnly(True)
-        self.resultsField.setGeometry(QtCore.QRect(10, 270, 761, 261))
+        self.resultsField.setGeometry(QtCore.QRect(10, 310, 761, 251))
         self.resultsField.setObjectName("resultsField")
-        self.oneStepBt = QtWidgets.QPushButton(self.centralwidget)
-        self.oneStepBt.setGeometry(QtCore.QRect(130, 540, 97, 31))
+        self.InputgroupBox = QtWidgets.QGroupBox(self.centralwidget)
+        self.InputgroupBox.setGeometry(QtCore.QRect(790, 290, 211, 121))
+        self.InputgroupBox.setObjectName("InputgroupBox")
+        self.stringInput = QtWidgets.QLineEdit(self.InputgroupBox)
+        self.stringInput.setGeometry(QtCore.QRect(10, 30, 191, 25))
+        self.stringInput.setObjectName("stringInput")
+        self.oneStepBt = QtWidgets.QPushButton(self.InputgroupBox)
+        self.oneStepBt.setGeometry(QtCore.QRect(110, 80, 91, 21))
         self.oneStepBt.setObjectName("oneStepBt")
-        self.runBt = QtWidgets.QPushButton(self.centralwidget)
-        self.runBt.setGeometry(QtCore.QRect(20, 540, 97, 31))
+        self.runBt = QtWidgets.QPushButton(self.InputgroupBox)
+        self.runBt.setGeometry(QtCore.QRect(10, 80, 91, 21))
         self.runBt.setAutoFillBackground(False)
         self.runBt.setObjectName("runBt")
         MainWindow.setCentralWidget(self.centralwidget)
@@ -151,7 +157,7 @@ class Ui_MainWindow(object):
         self.arrowbtn.setGeometry(QtCore.QRect(60, 230, 89, 25))
         self.arrowbtn.setObjectName("arrowbtn")
         self.line = QtWidgets.QFrame(self.centralwidget)
-        self.line.setGeometry(QtCore.QRect(770, 0, 20, 531))
+        self.line.setGeometry(QtCore.QRect(770, 0, 20, 571))
         self.line.setFrameShape(QtWidgets.QFrame.VLine)
         self.line.setFrameShadow(QtWidgets.QFrame.Sunken)
         self.line.setObjectName("line")
@@ -234,6 +240,8 @@ class Ui_MainWindow(object):
         self.psibtn.setText(_translate("MainWindow", "\u03C8"))
         self.omegabtn.setText(_translate("MainWindow", "\u03C9"))
         self.arrowbtn.setText(_translate("MainWindow", "\u2192"))
+        self.InputgroupBox.setTitle(_translate("MainWindow", "Input"))
+        self.stringInput.setPlaceholderText(_translate("MainWindow", "Enter String"))
 
 
     #File Management Actions:
