@@ -308,112 +308,108 @@ class Ui_MainWindow(object):
         self.mainWindow.setWindowTitle("Untitled")
 
     def putAlfa(self):
-        cursor = self.plainTextEdit.textCursor()
         self.plainTextEdit.insertPlainText("\u03B1")
-        cursor.movePosition(cursor.Right, cursor.KeepAnchor,  3)
+        self.plainTextEdit.setFocus()
     
     def putBeta(self):
-        cursor = self.plainTextEdit.textCursor()
         self.plainTextEdit.insertPlainText("\u03B2")
-        cursor.movePosition(cursor.Right, cursor.KeepAnchor,  3)
+        self.plainTextEdit.setFocus()
 
     def putGamma(self):
-        cursor = self.plainTextEdit.textCursor()
         self.plainTextEdit.insertPlainText("\u03B3")
-        cursor.movePosition(cursor.Right, cursor.KeepAnchor,  3)
+        self.plainTextEdit.setFocus()
 
     def putDelta(self):
-        cursor = self.plainTextEdit.textCursor()
         self.plainTextEdit.insertPlainText("\u03B4")
-        cursor.movePosition(cursor.Right, cursor.KeepAnchor,  3)
+        self.plainTextEdit.setFocus()
 
     def putEpsilon(self):
-        cursor = self.plainTextEdit.textCursor()
         self.plainTextEdit.insertPlainText("\u03B5")
+        self.plainTextEdit.setFocus()
 
     def putDseta(self):
-        cursor = self.plainTextEdit.textCursor()
         self.plainTextEdit.insertPlainText("\u03B6")
+        self.plainTextEdit.setFocus()
 
     def putEta(self):
-        cursor = self.plainTextEdit.textCursor()
         self.plainTextEdit.insertPlainText("\u03B7")
+        self.plainTextEdit.setFocus()
 
     def putTheta(self):
-        cursor = self.plainTextEdit.textCursor()
         self.plainTextEdit.insertPlainText("\u03B8")
+        self.plainTextEdit.setFocus()
 
     def putIota(self):
-        cursor = self.plainTextEdit.textCursor()
         self.plainTextEdit.insertPlainText("\u03B9")
+        self.plainTextEdit.setFocus()
 
     def putKappa(self):
-        cursor = self.plainTextEdit.textCursor()
         self.plainTextEdit.insertPlainText("\u03BA")
+        self.plainTextEdit.setFocus()
     
     def putLambdaMin(self):
-        cursor = self.plainTextEdit.textCursor()
         self.plainTextEdit.insertPlainText("\u03BB")
+        self.plainTextEdit.setFocus()
     
     def putLambdaMay(self):
-        cursor = self.plainTextEdit.textCursor()
         self.plainTextEdit.insertPlainText("\u039B")
+        self.plainTextEdit.setFocus()
 
     def putMy(self):
-        cursor = self.plainTextEdit.textCursor()
         self.plainTextEdit.insertPlainText("\u03BC")
+        self.plainTextEdit.setFocus()
     
     def putNy(self):
-        cursor = self.plainTextEdit.textCursor()
         self.plainTextEdit.insertPlainText("\u03BD")
+        self.plainTextEdit.setFocus()
     
     def putXi(self):
-        cursor = self.plainTextEdit.textCursor()
         self.plainTextEdit.insertPlainText("\u03BE")
+        self.plainTextEdit.setFocus()
 
     def putOmicron(self):
-        cursor = self.plainTextEdit.textCursor()
         self.plainTextEdit.insertPlainText("\u03BF")
+        self.plainTextEdit.setFocus()
 
     def putPi(self):
-        cursor = self.plainTextEdit.textCursor()
         self.plainTextEdit.insertPlainText("\u03C0")
+        self.plainTextEdit.setFocus()
 
     def putRho(self):
-        cursor = self.plainTextEdit.textCursor()
         self.plainTextEdit.insertPlainText("\u03C1")
+        self.plainTextEdit.setFocus()
     
     def putSigma(self):
-        cursor = self.plainTextEdit.textCursor()
         self.plainTextEdit.insertPlainText("\u03C3")
+        self.plainTextEdit.setFocus()
     
     def putTau(self):
-        cursor = self.plainTextEdit.textCursor()
         self.plainTextEdit.insertPlainText("\u03C4")
+        self.plainTextEdit.setFocus()
 
     def putYpsilon(self):
-        cursor = self.plainTextEdit.textCursor()
         self.plainTextEdit.insertPlainText("\u03C5")
+        self.plainTextEdit.setFocus()
 
     def putFi(self):
-        cursor = self.plainTextEdit.textCursor()
         self.plainTextEdit.insertPlainText("\u03C6")
+        self.plainTextEdit.setFocus()
     
     def putJi(self):
-        cursor = self.plainTextEdit.textCursor()
         self.plainTextEdit.insertPlainText("\u03C7")
+        self.plainTextEdit.setFocus()
 
     def putPsi(self):
-        cursor = self.plainTextEdit.textCursor()
         self.plainTextEdit.insertPlainText("\u03C8")
+        self.plainTextEdit.setFocus()
     
     def putOmega(self):
-        cursor = self.plainTextEdit.textCursor()
         self.plainTextEdit.insertPlainText("\u03C9")
+        self.plainTextEdit.setFocus()
 
     def putArrow(self):
-        cursor = self.plainTextEdit.textCursor()
         self.plainTextEdit.insertPlainText("\u2192")
+        self.plainTextEdit.setFocus()
 
 if __name__ == "__main__":
     import sys
