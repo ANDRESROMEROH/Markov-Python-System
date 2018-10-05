@@ -3,7 +3,7 @@ from PyQt5.QtWidgets import *
 #!/usr/bin/python
 #  # -*- coding: U+0395 -*-
 import os, sys
-
+from InputsGui import Ui_multiInputsDialog
 
 class Ui_MainWindow(object):
     
@@ -61,8 +61,6 @@ class Ui_MainWindow(object):
         self.actionSave.setObjectName("actionSave")
         self.actionSaveAs = QtWidgets.QAction(MainWindow)
         self.actionSaveAs.setObjectName("actionSaveAs")
-        self.actionSimple_Input = QtWidgets.QAction(MainWindow)
-        self.actionSimple_Input.setObjectName("actionSimple_Input")
         self.actionMultiple_Inputs = QtWidgets.QAction(MainWindow)
         self.actionMultiple_Inputs.setObjectName("actionMultiple_Inputs")
         self.actionPalette = QtWidgets.QAction(MainWindow)
@@ -72,7 +70,6 @@ class Ui_MainWindow(object):
         self.menuFile.addSeparator()
         self.menuFile.addAction(self.actionSave)
         self.menuFile.addAction(self.actionSaveAs) 
-        self.menuInput.addAction(self.actionSimple_Input)
         self.menuInput.addAction(self.actionMultiple_Inputs)
         self.menubar.addAction(self.menuFile.menuAction())
         self.menubar.addAction(self.menuInput.menuAction())
@@ -157,47 +154,56 @@ class Ui_MainWindow(object):
         self.arrowbtn.setGeometry(QtCore.QRect(60, 230, 89, 25))
         self.arrowbtn.setObjectName("arrowbtn")
         self.line = QtWidgets.QFrame(self.centralwidget)
+
         self.line.setGeometry(QtCore.QRect(770, 0, 20, 571))
         self.line.setFrameShape(QtWidgets.QFrame.VLine)
         self.line.setFrameShadow(QtWidgets.QFrame.Sunken)
         self.line.setObjectName("line")
+        
+        self.retranslateUi(MainWindow)
+        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+        self.multiInputsDialog = QtWidgets.QDialog()
+        self.ui = Ui_multiInputsDialog()
+        self.ui.setupUi(self.multiInputsDialog)
+        self.mainWindow = MainWindow
 
-        #FILE Menu Management:
+        #FILE MENU EVENTS:
         self.actionNew.triggered.connect(self.file_new)
         self.actionOpen.triggered.connect(self.file_open)
         self.actionSave.triggered.connect(self.file_save)
         self.actionSaveAs.triggered.connect(self.file_saveAs)
-        self.alfabtn.clicked.connect(self.putAlfa)
-        self.betabtn.clicked.connect(self.putBeta)
-        self.gammabtn.clicked.connect(self.putGamma)
-        self.deltabtn.clicked.connect(self.putDelta)
-        self.epsilonbtn.clicked.connect(self.putEpsilon)
-        self.dsetabtn.clicked.connect(self.putDseta)
-        self.etabtn.clicked.connect(self.putEta)
-        self.thetabtn.clicked.connect(self.putTheta)
-        self.iotabtn.clicked.connect(self.putIota)
-        self.kappabtn.clicked.connect(self.putKappa)
-        self.lambdaminbtn.clicked.connect(self.putLambdaMin)
-        self.lambdamaybtn.clicked.connect(self.putLambdaMay)
-        self.mybtn.clicked.connect(self.putMy)
-        self.nybtn.clicked.connect(self.putNy)
-        self.xibtn.clicked.connect(self.putXi)
-        self.omicronbtn.clicked.connect(self.putOmicron)
-        self.pibtn.clicked.connect(self.putPi)
-        self.rhobtn.clicked.connect(self.putRho)
-        self.sigmabtn.clicked.connect(self.putSigma)
-        self.taubtn.clicked.connect(self.putTau)
-        self.ypsilonbtn.clicked.connect(self.putYpsilon)
-        self.fibtn.clicked.connect(self.putFi)
-        self.jibtn.clicked.connect(self.putJi)
-        self.psibtn.clicked.connect(self.putPsi)
-        self.omegabtn.clicked.connect(self.putOmega)
-        self.arrowbtn.clicked.connect(self.putArrow)
-        
-        self.retranslateUi(MainWindow)
 
-        QtCore.QMetaObject.connectSlotsByName(MainWindow)
-        self.mainWindow = MainWindow
+        #PALETTE EVENTS
+        self.alfabtn.clicked.connect(self.put_Alfa)
+        self.betabtn.clicked.connect(self.put_Beta)
+        self.gammabtn.clicked.connect(self.put_Gamma)
+        self.deltabtn.clicked.connect(self.put_Delta)
+        self.epsilonbtn.clicked.connect(self.put_Epsilon)
+        self.dsetabtn.clicked.connect(self.put_Dseta)
+        self.etabtn.clicked.connect(self.put_Eta)
+        self.thetabtn.clicked.connect(self.put_Theta)
+        self.iotabtn.clicked.connect(self.put_Iota)
+        self.kappabtn.clicked.connect(self.put_Kappa)
+        self.lambdaminbtn.clicked.connect(self.put_LambdaMin)
+        self.lambdamaybtn.clicked.connect(self.put_LambdaMay)
+        self.mybtn.clicked.connect(self.put_My)
+        self.nybtn.clicked.connect(self.put_Ny)
+        self.xibtn.clicked.connect(self.put_Xi)
+        self.omicronbtn.clicked.connect(self.put_Omicron)
+        self.pibtn.clicked.connect(self.put_Pi)
+        self.rhobtn.clicked.connect(self.put_Rho)
+        self.sigmabtn.clicked.connect(self.put_Sigma)
+        self.taubtn.clicked.connect(self.put_Tau)
+        self.ypsilonbtn.clicked.connect(self.put_Ypsilon)
+        self.fibtn.clicked.connect(self.put_Fi)
+        self.jibtn.clicked.connect(self.put_Ji)
+        self.psibtn.clicked.connect(self.put_Psi)
+        self.omegabtn.clicked.connect(self.put_Omega)
+        self.arrowbtn.clicked.connect(self.put_Arrow)
+
+        #INPUT OPTIONS EVENTS:
+        self.actionMultiple_Inputs.triggered.connect(self.open_multi_inputs)
+
 
 
     def retranslateUi(self, MainWindow):
@@ -211,7 +217,6 @@ class Ui_MainWindow(object):
         self.actionOpen.setText(_translate("MainWindow", "Open"))
         self.actionSave.setText(_translate("MainWindow", "Save"))
         self.actionSaveAs.setText(_translate("MainWindow", "Save As"))
-        self.actionSimple_Input.setText(_translate("MainWindow", "Simple Input"))
         self.actionMultiple_Inputs.setText(_translate("MainWindow", "Multiple Inputs"))
         self.groupPalette.setTitle(_translate("MainWindow", "Palette"))
         self.alfabtn.setText(_translate("MainWindow", "\u03B1"))
@@ -294,14 +299,27 @@ class Ui_MainWindow(object):
     def file_save(self):
         information = self.plainTextEdit.toPlainText()
 
-        try:
-            file = open(self.currentFile, 'w')
+        if information:
 
-            with file:    
-                file.write(information)
+            if self.currentFile == "":
+                self.file_saveAs()
 
-        except Exception as error:
-            raise Exception("There was an error saving the file: ".format(error))
+            else:
+                try:
+                    file = open(self.currentFile, 'w')
+
+                    with file:    
+                        file.write(information)
+
+                except Exception as error:
+                    raise Exception("There was an error saving the file: ".format(error))
+
+        else:
+            msg = QMessageBox(self.centralwidget)
+            msg.setText("You cannot save an empty file")
+            msg.setInformativeText("Please type something before saving")
+            msg.setWindowTitle("We are sorry!")
+            msg.exec_()
 
     
     def file_new(self):
@@ -309,116 +327,112 @@ class Ui_MainWindow(object):
         self.currentFile = ""
         self.mainWindow.setWindowTitle("Untitled")
 
-    def putAlfa(self):
+    def put_Alfa(self):
         self.plainTextEdit.insertPlainText("\u03B1")
         self.plainTextEdit.setFocus()
     
-    def putBeta(self):
+    def put_Beta(self):
         self.plainTextEdit.insertPlainText("\u03B2")
         self.plainTextEdit.setFocus()
 
-    def putGamma(self):
+    def put_Gamma(self):
         self.plainTextEdit.insertPlainText("\u03B3")
         self.plainTextEdit.setFocus()
 
-    def putDelta(self):
+    def put_Delta(self):
         self.plainTextEdit.insertPlainText("\u03B4")
         self.plainTextEdit.setFocus()
 
-    def putEpsilon(self):
+    def put_Epsilon(self):
         self.plainTextEdit.insertPlainText("\u03B5")
         self.plainTextEdit.setFocus()
 
-    def putDseta(self):
+    def put_Dseta(self):
         self.plainTextEdit.insertPlainText("\u03B6")
         self.plainTextEdit.setFocus()
 
-    def putEta(self):
+    def put_Eta(self):
         self.plainTextEdit.insertPlainText("\u03B7")
         self.plainTextEdit.setFocus()
 
-    def putTheta(self):
+    def put_Theta(self):
         self.plainTextEdit.insertPlainText("\u03B8")
         self.plainTextEdit.setFocus()
 
-    def putIota(self):
+    def put_Iota(self):
         self.plainTextEdit.insertPlainText("\u03B9")
         self.plainTextEdit.setFocus()
 
-    def putKappa(self):
+    def put_Kappa(self):
         self.plainTextEdit.insertPlainText("\u03BA")
         self.plainTextEdit.setFocus()
     
-    def putLambdaMin(self):
+    def put_LambdaMin(self):
         self.plainTextEdit.insertPlainText("\u03BB")
         self.plainTextEdit.setFocus()
     
-    def putLambdaMay(self):
+    def put_LambdaMay(self):
         self.plainTextEdit.insertPlainText("\u039B")
         self.plainTextEdit.setFocus()
 
-    def putMy(self):
+    def put_My(self):
         self.plainTextEdit.insertPlainText("\u03BC")
         self.plainTextEdit.setFocus()
     
-    def putNy(self):
+    def put_Ny(self):
         self.plainTextEdit.insertPlainText("\u03BD")
         self.plainTextEdit.setFocus()
     
-    def putXi(self):
+    def put_Xi(self):
         self.plainTextEdit.insertPlainText("\u03BE")
         self.plainTextEdit.setFocus()
 
-    def putOmicron(self):
+    def put_Omicron(self):
         self.plainTextEdit.insertPlainText("\u03BF")
         self.plainTextEdit.setFocus()
 
-    def putPi(self):
+    def put_Pi(self):
         self.plainTextEdit.insertPlainText("\u03C0")
         self.plainTextEdit.setFocus()
 
-    def putRho(self):
+    def put_Rho(self):
         self.plainTextEdit.insertPlainText("\u03C1")
         self.plainTextEdit.setFocus()
     
-    def putSigma(self):
+    def put_Sigma(self):
         self.plainTextEdit.insertPlainText("\u03C3")
         self.plainTextEdit.setFocus()
     
-    def putTau(self):
+    def put_Tau(self):
         self.plainTextEdit.insertPlainText("\u03C4")
         self.plainTextEdit.setFocus()
 
-    def putYpsilon(self):
+    def put_Ypsilon(self):
         self.plainTextEdit.insertPlainText("\u03C5")
         self.plainTextEdit.setFocus()
 
-    def putFi(self):
+    def put_Fi(self):
         self.plainTextEdit.insertPlainText("\u03C6")
         self.plainTextEdit.setFocus()
     
-    def putJi(self):
+    def put_Ji(self):
         self.plainTextEdit.insertPlainText("\u03C7")
         self.plainTextEdit.setFocus()
 
-    def putPsi(self):
+    def put_Psi(self):
         self.plainTextEdit.insertPlainText("\u03C8")
         self.plainTextEdit.setFocus()
     
-    def putOmega(self):
+    def put_Omega(self):
         self.plainTextEdit.insertPlainText("\u03C9")
         self.plainTextEdit.setFocus()
 
-    def putArrow(self):
+    def put_Arrow(self):
         self.plainTextEdit.insertPlainText("\u2192")
         self.plainTextEdit.setFocus()
 
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
-    sys.exit(app.exec_())
 
+############################## Multiple Inputs GUI:
+
+    def open_multi_inputs(self):
+        self.multiInputsDialog.show()

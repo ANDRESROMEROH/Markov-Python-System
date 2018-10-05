@@ -40,13 +40,13 @@ class Ui_multiInputsDialog(object):
         self.clearInputsBt.clicked.connect(self.clear_rows)
 
         self.retranslateUi(multiInputsDialog)
-        self.generateRows(self.rows)
+        self.generate_Rows(self.rows)
         QtCore.QMetaObject.connectSlotsByName(multiInputsDialog)
 
 
     def retranslateUi(self, multiInputsDialog):
         _translate = QtCore.QCoreApplication.translate
-        multiInputsDialog.setWindowTitle(_translate("multiInputsDialog", "Inputs"))
+        multiInputsDialog.setWindowTitle(_translate("multiInputsDialog", "Inputs (Max. 30)"))
         __sortingEnabled = self.listWidget.isSortingEnabled()
         self.listWidget.setSortingEnabled(False)
         
@@ -56,7 +56,7 @@ class Ui_multiInputsDialog(object):
         self.clearInputsBt.setText(_translate("multiInputsDialog", "Clear"))
 
 
-    def generateRows(self, rows): #The app is meant to process a maximum of 30 string entries...
+    def generate_Rows(self, rows): #The app is meant to process a maximum of 30 string entries...
 
         for i in range(0,30):
             item = QtWidgets.QListWidgetItem()
