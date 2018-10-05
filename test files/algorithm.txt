@@ -1,0 +1,10 @@
+% Algoritmo 1 (Ejemplo canónico).
+% Este es un algoritmo de ejemplo que se encuentra en muchos textos
+% que describen los algoritmos de Markov y algunas implementaciones.
+#symbols abcdefghijklmnopqrstuvwxyz0123456789
+#markers ABST
+"A" -> "apple"
+"B" -> "bag"
+"S" -> "shop"
+"T" -> "the"
+"the shop" -> "my brother"
