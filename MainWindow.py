@@ -2,7 +2,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import *
 #!/usr/bin/python
 #  # -*- coding: U+0395 -*-
-import os, sys
+import os, sys, codecs
 from InputsGui import Ui_multiInputsDialog
 
 class Ui_MainWindow(object):
@@ -256,7 +256,7 @@ class Ui_MainWindow(object):
         
         if path[0]:
             try:
-                file = open(path[0],'r')
+                file = codecs.open(path[0],'r', encoding='UTF-8')
 
                 with file:
                     text = file.read()
@@ -277,7 +277,7 @@ class Ui_MainWindow(object):
             path = QFileDialog.getSaveFileName(self.menuFile, 'Save As', os.getenv('HOME'), 'TXT(*.txt)')
             
             try:
-                file = open(path[0], 'w')
+                file = codecs.open(path[0],'w', encoding='UTF-8')
 
                 with file:    
                     file.write(information)
@@ -306,7 +306,7 @@ class Ui_MainWindow(object):
 
             else:
                 try:
-                    file = open(self.currentFile, 'w')
+                    file = codecs.open(self.currentFile, 'w', encoding='UTF-8')
 
                     with file:    
                         file.write(information)
