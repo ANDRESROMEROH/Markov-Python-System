@@ -253,7 +253,7 @@ class Ui_MainWindow(object):
 
     def file_open(self):
         path = QFileDialog.getOpenFileName()
-
+        
         if path[0]:
             try:
                 file = open(path[0],'r')

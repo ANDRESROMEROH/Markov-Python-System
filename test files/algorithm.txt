@@ -1,10 +1,7 @@
-% Algoritmo 1 (Ejemplo canónico).
-% Este es un algoritmo de ejemplo que se encuentra en muchos textos
-% que describen los algoritmos de Markov y algunas implementaciones.
 #symbols abcdefghijklmnopqrstuvwxyz0123456789
-#markers ABST
-"A" -> "apple"
-"B" -> "bag"
-"S" -> "shop"
-"T" -> "the"
-"the shop" -> "my brother"
+#vars x
+#markers β
+P1:βx → xβ (P1)
+P2:xβ → Λ.
+P3:x → βx (P1)
+
