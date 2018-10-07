@@ -17,7 +17,10 @@ class Markov(QMainWindow, Ui_MainWindow):
         super(Markov, self).__init__(*args, **kwargs)
         self.setupUi(self)
         self.show()
-        self.runBt.clicked.connect(self.load_attributes)
+        self.runBt.clicked.connect(self.run)
+
+    def run(self):
+        self.load_attributes()
 
 
     def load_attributes(self):
@@ -47,7 +50,11 @@ class Markov(QMainWindow, Ui_MainWindow):
 
         if re.search("\(\w+\)", line[1]):
             rule.tag = line[1].split("(")[1].replace(')', '') #splits the tag, tag=P1
-        print(rule.tag)
+
+        if re.search("\.$",line[1]): #Look up if the given rule is final
+            rule.isFinal=True
+
+        rules.append(rule)
 
 
 ########## Application Main:

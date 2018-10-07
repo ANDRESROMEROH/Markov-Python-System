@@ -247,6 +247,7 @@ class Ui_MainWindow(object):
         self.arrowbtn.setText(_translate("MainWindow", "\u2192"))
         self.InputgroupBox.setTitle(_translate("MainWindow", "Input"))
         self.stringInput.setPlaceholderText(_translate("MainWindow", "Enter String"))
+        self.plainTextEdit.setPlaceholderText("#symbols abcdefghijklmnopqrstuvwxyz0123456789\n#vars x\n#markers β\nP1:βx → xβ (P1)\nP2:xβ → Λ.\nP3:x → βx (P1)")
 
 
     #File Management Actions:
