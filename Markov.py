@@ -22,6 +22,21 @@ class Markov(QMainWindow, Ui_MainWindow):
 
     def run(self):
         self.load_attributes()
+        rule = "βx"
+        inputt = 'βa'
+        pVariables = self.containsVariable("βx")
+
+        if pVariables:
+            for var in pVariables:
+                test = rule.replace(var, "[" + self.symbols + "]")
+                print(test)
+                test2 = re.sub(test, 'xβ', inputt)
+                print(test2)
+        else:
+            print("NO HAY")
+
+        # self.load_attributes()s
+        # self.replace("I bought a B of As from T S.")
     
 
     def load_attributes(self):
@@ -100,30 +115,27 @@ class Markov(QMainWindow, Ui_MainWindow):
 
         self.rules.append(rule)    
                     
-        # if (rule.id!=None):
-        #     print("Id:"+rule.id)
-        # print("Pattern: "+rule.pattern)
-        # print("Substitution: "+rule.substitution)
-        # if (rule.tag!=None):
-        #     print("Tag:"+rule.tag)
-        # print("Is final? ")
-        # print(rule.isFinal)
-        # print("*****************************")
-
-
 
     def replace(self, input):
-        for rule in self.rules:
-            if rule.pattern in input:
-                input = input.replace(rule.pattern, rule.substitution, 1)
-                if rule.isFinal:
-                    #return input
-                    print(input)
-                break
-        else:
-            #return input
-            print("False")
+        while True:
+            for rule in self.rules:
+                if rule.pattern in input:
+                    input = input.replace(rule.pattern, rule.substitution, 1)
+                    if rule.isFinal:
+                        print(input)
+                        break
+                    else:
+                        print(input)
+            break
 
+
+    def containsVariable(self, pattern):
+        pVariables = [] #Pattern variables
+        for var in self.variables:
+            if var in pattern:
+                pVariables.append(var)
+
+        return pVariables
 
 
 ############ Application Main #############
