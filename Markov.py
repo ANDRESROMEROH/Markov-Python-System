@@ -22,18 +22,18 @@ class Markov(QMainWindow, Ui_MainWindow):
 
     def run(self):
         self.load_attributes()
-        rule = "βx"
-        inputt = 'βa'
-        pVariables = self.containsVariable("βx")
+        rule = "βxx"
+        userInput = 'βab'
+        patternVariables = self.containsVariable("βx")
 
-        if pVariables:
-            for var in pVariables:
-                test = rule.replace(var, "[" + self.symbols + "]")
-                print(test)
-                test2 = re.sub(test, 'xβ', inputt)
-                print(test2)
+        if patternVariables:
+            for var in patternVariables:
+                regex = rule.replace(var, "[" + self.symbols + "]") #β[abcdefg.....]
+                #match = re.search(regex, userInput, 1).group(0)
+                output = re.sub(regex, self.patternSubstitution('βab','xxβ'), userInput)
+                print(output)
         else:
-            print("NO HAY")
+            print("NO VARRIABLES")
 
         # self.load_attributes()s
         # self.replace("I bought a B of As from T S.")
@@ -136,6 +136,29 @@ class Markov(QMainWindow, Ui_MainWindow):
                 pVariables.append(var)
 
         return pVariables
+
+
+    # def extractSymbols(self, string):
+    #     symbols = []
+    #     for letter in string:
+    #         if letter in self.symbols:
+    #             symbols.append(letter)
+        
+    #     return symbols
+
+
+    def patternSubstitution(self, pattern , substitution):
+        for symbol in pattern:
+            if symbol in self.symbols:
+                for variable in substitution:
+                    if variable in self.variables:
+                        substitution = substitution.replace(variable, symbol, 1)
+                        break
+        
+        return substitution
+
+    
+
 
 
 ############ Application Main #############
