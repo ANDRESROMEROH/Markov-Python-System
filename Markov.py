@@ -18,43 +18,50 @@ class Markov(QMainWindow, Ui_MainWindow):
         self.rules = []
 
         self.runBt.clicked.connect(self.run)
+        self.ui.runInputsBt.clicked.connect(self.runMultipleInputs)        
 
 
     def run(self):
+        userInput = self.getUserInput()
         self.load_attributes()
-        rule = "βxx"
-        userInput = 'βab'
-        patternVariables = self.containsVariable("βx")
+        self.processInput(userInput)
 
-        if patternVariables:
-            for var in patternVariables:
-                regex = rule.replace(var, "[" + self.symbols + "]") #β[abcdefg.....]
-                #match = re.search(regex, userInput, 1).group(0)
-                output = re.sub(regex, self.patternSubstitution('βab','xxβ'), userInput)
-                print(output)
-        else:
-            print("NO VARRIABLES")
 
-        # self.load_attributes()s
-        # self.replace("I bought a B of As from T S.")
-    
+    def runMultipleInputs(self):
+        multipleInputs = self.getItems()
+        for input in multipleInputs:
+            self.resultsField.appendPlainText(input)
+
 
     def load_attributes(self):
         lines = str(self.plainTextEdit.toPlainText()).splitlines()
         
         for line in lines:
             if re.match("#symbols", line):
-                self.symbols = re.sub("^\#symbols", "", line).lstrip()
+                self.symbols = re.sub("^\#symbols", "", line).replace(" ", "")
             else:
                 if re.match("#vars", line):
-                    self.variables = re.sub("^\#vars", "", line).lstrip()
+                    self.variables = re.sub("^\#vars", "", line).replace(" ", "")
                 else:
                     if re.match("#markers", line):
-                        self.markers = re.sub("^\#markers", "", line).lstrip()
+                        self.markers = re.sub("^\#markers", "", line).replace(" ", "")
                     else:
                         if re.match("^.+", line):
                             self.create_rule(line)
-        
+
+     
+    def getUserInput(self):
+        input=self.stringInput.text()
+        return input   
+
+
+    def getItems(self):
+        multipleInputs = []
+        for item in self.ui.rows:
+            if item.text() != '':
+                multipleInputs.append(item.text())
+        return multipleInputs   
+
 
     def create_rule(self, line):
         rule = Rule()
@@ -63,7 +70,7 @@ class Markov(QMainWindow, Ui_MainWindow):
         forId = re.compile('([\D].*)(?=:)') #Regular expresion to extract identifiers
         reMatch = forId.search(line)
         if reMatch: #If the rule has an id
-            rule.id = reMatch.group(0).lstrip()
+            rule.id = reMatch.group(0).replace(" ", "")
 
         #Pattern
         compilerNoIdQuotes = re.compile('(?<=\")(.*)(?=\"\s*\→)', re.IGNORECASE | re.UNICODE) #Compiler for pattern with no id, ex: "x"->
@@ -77,14 +84,14 @@ class Markov(QMainWindow, Ui_MainWindow):
         #print("TEST")
 
         if reMatchId:
-            rule.pattern = reMatchId.group(0).lstrip()
+            rule.pattern = reMatchId.group(0).replace(" ", "")
         else:
             if reMatchNoIdQuotes:
-                rule.pattern = reMatchNoIdQuotes.group(0).lstrip()
+                rule.pattern = reMatchNoIdQuotes.group(0).replace(" ", "")
                 
             else:
                 if reMatchNoId:
-                    rule.pattern = reMatchNoId.group(0).lstrip()
+                    rule.pattern = reMatchNoId.group(0).replace(" ", "")
 
         #Substitution and isFinal
         compilerTag= re.compile('(?<=→)(.*)(?=\()', re.IGNORECASE | re.UNICODE) #Compiler for substitution with a tag
@@ -96,36 +103,47 @@ class Markov(QMainWindow, Ui_MainWindow):
         reMatchSubs = compilerSubs.search(line)
 
         if reMatchTag:
-            rule.substitution = reMatchTag.group(0).lstrip()
+            rule.substitution = reMatchTag.group(0).replace(" ", "")
         else:
             if reMatchPoint:
-                rule.substitution = reMatchPoint.group(0).lstrip()
+                rule.substitution = reMatchPoint.group(0).replace(" ", "")
                 rule.isFinal=True
                 
             else:
                 if reMatchSubs:
                     #print(" Tercer IF nothing")
-                    rule.substitution = reMatchSubs.group(0).lstrip()
+                    rule.substitution = reMatchSubs.group(0).replace(" ", "")
         
         #Tag
         tag = re.compile('(?<=\()(.*)(?=\))') #Regular expresion to extract identifiers
         reMatchForTag = tag.search(line)
         if reMatchForTag : #If the rule has an id
-            rule.tag = reMatchForTag.group(0).lstrip()
+            rule.tag = reMatchForTag.group(0).replace(" ", "")
 
         self.rules.append(rule)    
                     
 
-    def replace(self, input):
+    def processInput(self, input):
+        
         while True:
             for rule in self.rules:
-                if rule.pattern in input:
-                    input = input.replace(rule.pattern, rule.substitution, 1)
-                    if rule.isFinal:
-                        print(input)
-                        break
-                    else:
-                        print(input)
+                patternVariables = self.containsVariable(rule.pattern)
+                if patternVariables:
+                    for var in patternVariables: #[xx]
+                        regex = rule.pattern.replace(var, "[" + self.symbols + "]") #β[abcdefg.....]
+                        match = re.compile(regex, re.IGNORECASE | re.UNICODE)
+                        matchingStr = match.search(input).group(0) #Extracts the matching part of the input string
+                        
+                        output = re.sub(regex, self.patternSubstitution(matchingStr, rule.substitution), input) #β[abcdefg.....]
+                        print(output)
+                else:
+                    if rule.pattern in input:
+                        input = input.replace(rule.pattern, rule.substitution, 1)
+                        if rule.isFinal:
+                            print(input)
+                            break
+                        else:
+                            print(input)
             break
 
 
@@ -138,16 +156,7 @@ class Markov(QMainWindow, Ui_MainWindow):
         return pVariables
 
 
-    # def extractSymbols(self, string):
-    #     symbols = []
-    #     for letter in string:
-    #         if letter in self.symbols:
-    #             symbols.append(letter)
-        
-    #     return symbols
-
-
-    def patternSubstitution(self, pattern , substitution):
+    def patternSubstitution(self, pattern , substitution): #pattern = "βab"; substitution = "xxβ"
         for symbol in pattern:
             if symbol in self.symbols:
                 for variable in substitution:
@@ -156,8 +165,6 @@ class Markov(QMainWindow, Ui_MainWindow):
                         break
         
         return substitution
-
-    
 
 
 

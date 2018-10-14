@@ -1,6 +1,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import *
-import os, sys
+import os, sys, codecs
 
 class Ui_multiInputsDialog(object):
     def setupUi(self, multiInputsDialog):
@@ -72,7 +72,7 @@ class Ui_multiInputsDialog(object):
 
         if path[0]:
             try:
-                file = open(path[0],'r')
+                file = codecs.open(path[0], 'r', encoding='UTF-8')
 
                 with file:
                     content = file.readlines()
@@ -88,14 +88,3 @@ class Ui_multiInputsDialog(object):
     def clear_rows(self):
         for row in self.rows:
             row.setText("")
-
-
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    multiInputsDialog = QtWidgets.QDialog()
-    ui = Ui_multiInputsDialog()
-    ui.setupUi(multiInputsDialog)
-    multiInputsDialog.show()
-    sys.exit(app.exec_())
-

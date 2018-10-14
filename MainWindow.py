@@ -205,7 +205,6 @@ class Ui_MainWindow(object):
         self.actionMultiple_Inputs.triggered.connect(self.open_multi_inputs)
 
 
-
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "Untitled"))
@@ -258,7 +257,6 @@ class Ui_MainWindow(object):
         if path[0]:
             try:
                 file = codecs.open(path[0],'r', encoding='UTF-8')
-
                 with file:
                     text = file.read()
                     self.plainTextEdit.setPlainText(text)
