@@ -24,9 +24,17 @@ class Markov(QMainWindow, Ui_MainWindow):
 
 
     def run(self):
+        self.variables = [] 
+        self.symbols = []
+        self.markers = []
+        self.rules = []
         userInput = self.getUserInput()
         self.load_algorithm()
+        self.remove_symbols()
+        # print("Lista antes: ",self.symbols)
         self.execute_algorithm(userInput)
+        
+        # print("Lista despues: ",self.symbols)
 
 
     def runMultipleInputs(self):
@@ -46,6 +54,12 @@ class Markov(QMainWindow, Ui_MainWindow):
             if item.text() != '':
                 multipleInputs.append(item.text())
         return multipleInputs   
+
+    def remove_symbols(self):
+        for v in self.variables:
+            if v in self.symbols:
+                self.symbols=self.symbols.replace(v,'')
+                
 
 
     def load_algorithm(self):
@@ -122,37 +136,41 @@ class Markov(QMainWindow, Ui_MainWindow):
         if reMatchForTag : #If the rule has an id
             rule.tag = reMatchForTag.group(0).replace(" ", "")
 
-        self.rules.append(rule)    
-                    
+        self.rules.append(rule)             
 
     def execute_algorithm(self, userInput):
         restart = True
-
+        userInput=self.nullrule(userInput)
         while restart:
             for rule in self.rules:
 
                 regex = self.getRuleRegex(rule)
-
+                
                 if regex.search(userInput) != None: #Same as -> if rule.pattern in userInput:
                     userInput = self.processRuleCase1(regex, rule, userInput)
                     
                     if rule.isFinal:
+                        userInput=self.remove_null(userInput)
                         self.resultsField.appendPlainText(userInput)
                         restart = False
                         break
                     else:
+                        userInput=self.remove_null(userInput)
                         self.resultsField.appendPlainText(userInput)
                         restart = True
                         break
 
                 else: 
                     if rule.pattern in userInput:
+                        print(userInput)
                         userInput = self.processRuleCase2(rule, userInput)
-
+                        print(userInput)
                         if rule.isFinal:
+                            userInput=self.remove_null(userInput)
                             self.resultsField.appendPlainText(userInput)
                             break
                         else:
+                            userInput=self.remove_null(userInput)
                             self.resultsField.appendPlainText(userInput)
                 
                 restart = False
@@ -161,6 +179,7 @@ class Markov(QMainWindow, Ui_MainWindow):
     def processRuleCase1(self, regex, rule, userInput): #Process rules which pattern contains variables...  
         #Below line extracts the matching part of the input string:
         matchingString = regex.search(userInput).group(0) 
+        print("MATCHING STRING: " + matchingString)
         #Below line applies the substitution:
         return re.sub(regex, self.applySubstitution(matchingString, rule.substitution), userInput, 1) 
     
@@ -188,6 +207,7 @@ class Markov(QMainWindow, Ui_MainWindow):
                 #Below line constructs a regex based on the symbols and markers found on the pattern:
                 regex = regex.replace(var, "[" + self.symbols + "]", 1)
         
+        print("REGEX: " + regex)
         return re.compile(regex, re.IGNORECASE | re.UNICODE)
 
 
@@ -199,6 +219,17 @@ class Markov(QMainWindow, Ui_MainWindow):
 
         return patternVariables
 
+    def remove_null(self,input):
+        if "\u039B" in input:
+            input=input.replace("\u039B","")
+        return input
+    
+    def nullrule(self,userInput):
+        for rule in self.rules:
+            if "\u039B" ==rule.pattern:
+                userInput="\u039B"+userInput
+                break
+        return userInput
 
 
 ####################### APPLICATION MAIN(): ###########################
