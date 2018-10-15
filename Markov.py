@@ -12,19 +12,21 @@ class Markov(QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         self.show()
 
+        #Algorithm Components:
         self.variables = [] 
         self.symbols = []
         self.markers = []
         self.rules = []
 
+        #Event listeners for action buttons:
         self.runBt.clicked.connect(self.run)
         self.ui.runInputsBt.clicked.connect(self.runMultipleInputs)        
 
 
     def run(self):
         userInput = self.getUserInput()
-        self.load_attributes()
-        self.processInput(userInput)
+        self.load_algorithm()
+        self.execute_algorithm(userInput)
 
 
     def runMultipleInputs(self):
@@ -32,8 +34,21 @@ class Markov(QMainWindow, Ui_MainWindow):
         for input in multipleInputs:
             self.resultsField.appendPlainText(input)
 
+    
+    def getUserInput(self):
+        input=self.stringInput.text()
+        return input   
 
-    def load_attributes(self):
+
+    def getItems(self):
+        multipleInputs = []
+        for item in self.ui.rows:
+            if item.text() != '':
+                multipleInputs.append(item.text())
+        return multipleInputs   
+
+
+    def load_algorithm(self):
         lines = str(self.plainTextEdit.toPlainText()).splitlines()
         
         for line in lines:
@@ -48,19 +63,6 @@ class Markov(QMainWindow, Ui_MainWindow):
                     else:
                         if re.match("^.+", line):
                             self.create_rule(line)
-
-     
-    def getUserInput(self):
-        input=self.stringInput.text()
-        return input   
-
-
-    def getItems(self):
-        multipleInputs = []
-        for item in self.ui.rows:
-            if item.text() != '':
-                multipleInputs.append(item.text())
-        return multipleInputs   
 
 
     def create_rule(self, line):
@@ -123,52 +125,83 @@ class Markov(QMainWindow, Ui_MainWindow):
         self.rules.append(rule)    
                     
 
-    def processInput(self, input):
-        
-        while True:
+    def execute_algorithm(self, userInput):
+        restart = True
+
+        while restart:
             for rule in self.rules:
-                patternVariables = self.containsVariable(rule.pattern)
-                if patternVariables:
-                    for var in patternVariables: #[xx]
-                        regex = rule.pattern.replace(var, "[" + self.symbols + "]") #β[abcdefg.....]
-                        match = re.compile(regex, re.IGNORECASE | re.UNICODE)
-                        matchingStr = match.search(input).group(0) #Extracts the matching part of the input string
-                        
-                        output = re.sub(regex, self.patternSubstitution(matchingStr, rule.substitution), input) #β[abcdefg.....]
-                        print(output)
-                else:
-                    if rule.pattern in input:
-                        input = input.replace(rule.pattern, rule.substitution, 1)
+
+                regex = self.getRuleRegex(rule)
+
+                if regex.search(userInput) != None: #Same as -> if rule.pattern in userInput:
+                    userInput = self.processRuleCase1(regex, rule, userInput)
+                    
+                    if rule.isFinal:
+                        self.resultsField.appendPlainText(userInput)
+                        restart = False
+                        break
+                    else:
+                        self.resultsField.appendPlainText(userInput)
+                        restart = True
+                        break
+
+                else: 
+                    if rule.pattern in userInput:
+                        userInput = self.processRuleCase2(rule, userInput)
+
                         if rule.isFinal:
-                            print(input)
+                            self.resultsField.appendPlainText(userInput)
                             break
                         else:
-                            print(input)
-            break
+                            self.resultsField.appendPlainText(userInput)
+                
+                restart = False
 
 
-    def containsVariable(self, pattern):
-        pVariables = [] #Pattern variables
-        for var in self.variables:
-            if var in pattern:
-                pVariables.append(var)
+    def processRuleCase1(self, regex, rule, userInput): #Process rules which pattern contains variables...  
+        #Below line extracts the matching part of the input string:
+        matchingString = regex.search(userInput).group(0) 
+        #Below line applies the substitution:
+        return re.sub(regex, self.applySubstitution(matchingString, rule.substitution), userInput, 1) 
+    
 
-        return pVariables
+    def processRuleCase2(self, rule, userInput): #Process rules which pattern doesn't contain variables...
+        return userInput.replace(rule.pattern, rule.substitution, 1)
+        
 
-
-    def patternSubstitution(self, pattern , substitution): #pattern = "βab"; substitution = "xxβ"
-        for symbol in pattern:
-            if symbol in self.symbols:
-                for variable in substitution:
-                    if variable in self.variables:
-                        substitution = substitution.replace(variable, symbol, 1)
+    def applySubstitution(self, matchingString , substitution): 
+        for m in matchingString:
+            if m in self.symbols:
+                for s in substitution:
+                    if s in self.variables:
+                        substitution = substitution.replace(s, m, 1)
                         break
         
         return substitution
 
+    def getRuleRegex(self, rule): #Return the regex of a given rule..
+        patternVariables = self.containsVariable(rule.pattern)
+        regex = rule.pattern
+
+        if patternVariables:
+            for var in patternVariables: 
+                #Below line constructs a regex based on the symbols and markers found on the pattern:
+                regex = regex.replace(var, "[" + self.symbols + "]", 1)
+        
+        return re.compile(regex, re.IGNORECASE | re.UNICODE)
 
 
-############ Application Main #############
+    def containsVariable(self, pattern):
+        patternVariables = [] #Pattern variables
+        for var in self.variables:
+            if var in pattern:
+                patternVariables.append(var)
+
+        return patternVariables
+
+
+
+####################### APPLICATION MAIN(): ###########################
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
     markov = Markov()

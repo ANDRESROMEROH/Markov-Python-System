@@ -1,0 +1,9 @@
+#symbols abcdefghijklmnopqrstuvwxyz0123456789
+#vars xy
+#markers αβθμ
+P1:yxβ → xβy
+P2:θy → yβyθ
+P3:β → μ
+P4:μ → Λ
+P5:θ → .Λ
+P6:Λ → θ
