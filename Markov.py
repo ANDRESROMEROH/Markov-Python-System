@@ -31,10 +31,7 @@ class Markov(QMainWindow, Ui_MainWindow):
         userInput = self.getUserInput()
         self.load_algorithm()
         self.remove_symbols()
-        # print("Lista antes: ",self.symbols)
         self.execute_algorithm(userInput)
-        
-        # print("Lista despues: ",self.symbols)
 
 
     def runMultipleInputs(self):
@@ -103,7 +100,7 @@ class Markov(QMainWindow, Ui_MainWindow):
             rule.pattern = reMatchId.group(0).replace(" ", "")
         else:
             if reMatchNoIdQuotes:
-                rule.pattern = reMatchNoIdQuotes.group(0).replace(" ", "")
+                rule.pattern = reMatchNoIdQuotes.group(0).strip(" ")
                 
             else:
                 if reMatchNoId:
@@ -140,14 +137,12 @@ class Markov(QMainWindow, Ui_MainWindow):
 
     def execute_algorithm(self, userInput):
         restart = True
-        userInput = self.nullrule(userInput)
         while restart:
             for rule in self.rules:
-
                 if self.variables != []:
 
                     regex = self.getRuleRegex(rule)
-                
+                    userInput = self.nullrule(rule.pattern,userInput)
                     if regex.search(userInput) != None: #Same as -> if rule.pattern in userInput:
                         userInput = self.processRuleCase1(regex, rule, userInput)
                         
@@ -158,7 +153,7 @@ class Markov(QMainWindow, Ui_MainWindow):
                             restart = False
                             break
                         else:
-                            userInput=self.remove_null(userInput)
+                            # userInput=self.remove_null(userInput)
                             self.resultsField.appendPlainText(userInput + "  Aplicando: " + rule.id)
                             restart = True
                             break
@@ -170,9 +165,11 @@ class Markov(QMainWindow, Ui_MainWindow):
                         if rule.isFinal:
                             userInput=self.remove_null(userInput)
                             self.resultsField.appendPlainText(userInput)
+
                             break
                         else:
                             userInput=self.remove_null(userInput)
+                            userInput=userInput.replace('"',"")
                             self.resultsField.appendPlainText(userInput)
                 
                 restart = False
@@ -191,19 +188,24 @@ class Markov(QMainWindow, Ui_MainWindow):
 
     def applySubstitution(self, matchingString ,pattern, substitution):     
         nvars = self.containsVariable(pattern)
+        nsubs = self.variablesFromString(substitution)
 
         if len(nvars) > 1:
             strvars = self.variablesFromString(matchingString)
-
             for i in range(0, len(nvars)):
-                substitution=substitution.replace(nvars[i], strvars[i], 1)
-            
+                substitution=substitution.replace(nvars[i], strvars[i])
+
+        # if len(nsubs) > 1:
+        #     strvars = self.variablesFromString(matchingString)
+        #     for i in range(0, len(nsubs)):
+        #         substitution=substitution.replace(nsubs[i], strvars[i])
         else:       
             for m in matchingString:
                 if m in self.symbols:
                     for s in substitution:
                         if s in self.variables:
-                            substitution = substitution.replace(s, m, 1)
+                            # modifique quitando el 1 de aca
+                            substitution = substitution.replace(s, m)
                             break
         
         return substitution
@@ -234,11 +236,9 @@ class Markov(QMainWindow, Ui_MainWindow):
         return input
 
     
-    def nullrule(self,userInput):
-        for rule in self.rules:
-            if "\u039B" ==rule.pattern:
-                userInput="\u039B"+userInput
-                break
+    def nullrule(self,pattern,userInput):
+        if "\u039B" ==pattern:
+            userInput="\u039B"+userInput
         return userInput
 
 

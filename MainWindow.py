@@ -323,6 +323,7 @@ class Ui_MainWindow(object):
     
     def file_new(self):
         self.plainTextEdit.clear()
+        self.stringInput.clear()
         self.resultsField.clear()
         self.currentFile = ""
         self.mainWindow.setWindowTitle("Untitled")
