@@ -140,31 +140,33 @@ class Markov(QMainWindow, Ui_MainWindow):
 
     def execute_algorithm(self, userInput):
         restart = True
-        userInput=self.nullrule(userInput)
+        userInput = self.nullrule(userInput)
         while restart:
             for rule in self.rules:
 
-                regex = self.getRuleRegex(rule)
+                if self.variables != []:
+
+                    regex = self.getRuleRegex(rule)
                 
-                if regex.search(userInput) != None: #Same as -> if rule.pattern in userInput:
-                    userInput = self.processRuleCase1(regex, rule, userInput)
-                    
-                    if rule.isFinal:
-                        userInput=self.remove_null(userInput)
-                        self.resultsField.appendPlainText(userInput)
-                        restart = False
-                        break
-                    else:
-                        userInput=self.remove_null(userInput)
-                        self.resultsField.appendPlainText(userInput)
-                        restart = True
-                        break
+                    if regex.search(userInput) != None: #Same as -> if rule.pattern in userInput:
+                        userInput = self.processRuleCase1(regex, rule, userInput)
+                        
+                        if rule.isFinal:
+                            userInput=self.remove_null(userInput)
+                            self.resultsField.appendPlainText(userInput + "  Aplicando: " + rule.id)
+                            self.resultsField.appendPlainText("---------------------------")
+                            restart = False
+                            break
+                        else:
+                            userInput=self.remove_null(userInput)
+                            self.resultsField.appendPlainText(userInput + "  Aplicando: " + rule.id)
+                            restart = True
+                            break
 
                 else: 
                     if rule.pattern in userInput:
-                        print(userInput)
                         userInput = self.processRuleCase2(rule, userInput)
-                        print(userInput)
+
                         if rule.isFinal:
                             userInput=self.remove_null(userInput)
                             self.resultsField.appendPlainText(userInput)
@@ -179,22 +181,30 @@ class Markov(QMainWindow, Ui_MainWindow):
     def processRuleCase1(self, regex, rule, userInput): #Process rules which pattern contains variables...  
         #Below line extracts the matching part of the input string:
         matchingString = regex.search(userInput).group(0) 
-        print("MATCHING STRING: " + matchingString)
         #Below line applies the substitution:
-        return re.sub(regex, self.applySubstitution(matchingString, rule.substitution), userInput, 1) 
+        return re.sub(regex, self.applySubstitution(matchingString, rule.pattern, rule.substitution), userInput, 1) 
     
 
     def processRuleCase2(self, rule, userInput): #Process rules which pattern doesn't contain variables...
         return userInput.replace(rule.pattern, rule.substitution, 1)
         
 
-    def applySubstitution(self, matchingString , substitution): 
-        for m in matchingString:
-            if m in self.symbols:
-                for s in substitution:
-                    if s in self.variables:
-                        substitution = substitution.replace(s, m, 1)
-                        break
+    def applySubstitution(self, matchingString ,pattern, substitution):     
+        nvars = self.containsVariable(pattern)
+
+        if len(nvars) > 1:
+            strvars = self.variablesFromString(matchingString)
+
+            for i in range(0, len(nvars)):
+                substitution=substitution.replace(nvars[i], strvars[i], 1)
+            
+        else:       
+            for m in matchingString:
+                if m in self.symbols:
+                    for s in substitution:
+                        if s in self.variables:
+                            substitution = substitution.replace(s, m, 1)
+                            break
         
         return substitution
 
@@ -207,7 +217,6 @@ class Markov(QMainWindow, Ui_MainWindow):
                 #Below line constructs a regex based on the symbols and markers found on the pattern:
                 regex = regex.replace(var, "[" + self.symbols + "]", 1)
         
-        print("REGEX: " + regex)
         return re.compile(regex, re.IGNORECASE | re.UNICODE)
 
 
@@ -223,6 +232,7 @@ class Markov(QMainWindow, Ui_MainWindow):
         if "\u039B" in input:
             input=input.replace("\u039B","")
         return input
+
     
     def nullrule(self,userInput):
         for rule in self.rules:
@@ -230,6 +240,15 @@ class Markov(QMainWindow, Ui_MainWindow):
                 userInput="\u039B"+userInput
                 break
         return userInput
+
+
+    def variablesFromString(self, matchingString):
+        strVariables = [] #Matching string variables
+        for var in self.symbols:
+            if var in matchingString:
+                strVariables.append(var)
+
+        return strVariables
 
 
 ####################### APPLICATION MAIN(): ###########################
