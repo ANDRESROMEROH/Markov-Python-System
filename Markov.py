@@ -187,7 +187,7 @@ class Markov(QMainWindow, Ui_MainWindow):
         
 
     def applySubstitution(self, matchingString ,pattern, substitution):     
-        nvars = self.containsVariable(pattern)
+        nvars = self.variablesFromPattern(pattern)
         nsubs = self.variablesFromString(substitution)
 
         if len(nvars) > 1:
@@ -244,11 +244,19 @@ class Markov(QMainWindow, Ui_MainWindow):
 
     def variablesFromString(self, matchingString):
         strVariables = [] #Matching string variables
-        for var in self.symbols:
-            if var in matchingString:
+        for var in matchingString:
+            if var in self.symbols:
                 strVariables.append(var)
 
         return strVariables
+    
+    def variablesFromPattern(self, pattern):
+        patternVariables = [] #Pattern variables
+        for var in pattern:
+            if var in self.variables:
+                patternVariables.append(var)
+
+        return patternVariables
 
 
 ####################### APPLICATION MAIN(): ###########################
