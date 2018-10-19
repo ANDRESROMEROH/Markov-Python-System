@@ -31,6 +31,12 @@ class Ui_MainWindow(object):
         self.oneStepBt = QtWidgets.QPushButton(self.InputgroupBox)
         self.oneStepBt.setGeometry(QtCore.QRect(110, 80, 91, 21))
         self.oneStepBt.setObjectName("oneStepBt")
+        self.resultsGroupBox = QtWidgets.QGroupBox(self.centralwidget)
+        self.resultsGroupBox.setGeometry(QtCore.QRect(790, 430, 211, 51))
+        self.resultsGroupBox.setObjectName("resultsGroupBox")
+        self.clearResults = QtWidgets.QPushButton(self.resultsGroupBox)
+        self.clearResults.setGeometry(QtCore.QRect(10, 20, 75, 23))
+        self.clearResults.setObjectName("clearResults")
         self.runBt = QtWidgets.QPushButton(self.InputgroupBox)
         self.runBt.setGeometry(QtCore.QRect(10, 80, 91, 21))
         self.runBt.setAutoFillBackground(False)
@@ -200,6 +206,7 @@ class Ui_MainWindow(object):
         self.psibtn.clicked.connect(self.put_Psi)
         self.omegabtn.clicked.connect(self.put_Omega)
         self.arrowbtn.clicked.connect(self.put_Arrow)
+        self.clearResults.clicked.connect(self.clearField)
 
         #INPUT OPTIONS EVENTS:
         self.actionMultiple_Inputs.triggered.connect(self.open_multi_inputs)
@@ -247,6 +254,8 @@ class Ui_MainWindow(object):
         self.InputgroupBox.setTitle(_translate("MainWindow", "Input"))
         self.stringInput.setPlaceholderText(_translate("MainWindow", "Enter String"))
         self.plainTextEdit.setPlaceholderText("#symbols abcdefghijklmnopqrstuvwxyz0123456789\n#vars x\n#markers β\nP1:βx → xβ (P1)\nP2:xβ → Λ.\nP3:x → βx (P1)")
+        self.resultsGroupBox.setTitle(_translate("MainWindow", "Results Field"))
+        self.clearResults.setText(_translate("MainWindow", "Clear"))
 
 
     #File Management Actions:
@@ -327,6 +336,9 @@ class Ui_MainWindow(object):
         self.resultsField.clear()
         self.currentFile = ""
         self.mainWindow.setWindowTitle("Untitled")
+
+    def clearField(self):
+        self.resultsField.clear()
 
     def put_Alfa(self):
         self.plainTextEdit.insertPlainText("\u03B1")
