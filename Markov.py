@@ -17,25 +17,41 @@ class Markov(QMainWindow, Ui_MainWindow):
         self.symbols = []
         self.markers = []
         self.rules = []
+        self.isParse=False
 
         #Event listeners for action buttons:
         self.runBt.clicked.connect(self.run)
         self.ui.runInputsBt.clicked.connect(self.runMultipleInputs) 
+        self.parseBt.clicked.connect(self.parseAlgorithm)
              
 
-
-    def run(self):
+    def verifyParse(self):
+        if self.rules != []:
+            self.isParse=True
+        return self.isParse
+    
+    def parseAlgorithm(self):
         #Arrays are restarted...
         self.variables = [] 
         self.symbols = []
         self.markers = []
         self.rules = []
-
-        userInput = self.getUserInput()
-
         self.load_algorithm()
         self.remove_symbols()
-        self.execute_algorithm(userInput)
+
+    def errorMsg(self):
+        msg = QMessageBox(self.mainWindow)
+        msg.setText("You cannot execute the algorithm before parsing it")
+        msg.setInformativeText("Please click the parse button")
+        msg.setWindowTitle("We are sorry!")
+        msg.exec_()
+
+    def run(self):
+        if self.verifyParse() ==False:
+            self.errorMsg()
+        else:
+            userInput = self.getUserInput()
+            self.execute_algorithm(userInput)
 
 
     def runMultipleInputs(self): #Run multiple inputs
@@ -153,13 +169,13 @@ class Markov(QMainWindow, Ui_MainWindow):
                         
                         if rule.isFinal:
                             userInput=self.remove_null(userInput)
-                            self.resultsField.appendPlainText(userInput + "    [Aplicando: " + rule.id + " Regla Final]")
+                            self.resultsField.appendPlainText("[Aplicando: " + rule.id + " Regla Final]     "+userInput)
                             self.resultsField.appendPlainText("--------------------------------------------------------")
                             restart = False
                             break
                         else:
                             # userInput=self.remove_null(userInput)
-                            self.resultsField.appendPlainText(userInput + "    [Aplicando: " + rule.id + "]")
+                            self.resultsField.appendPlainText("[Aplicando: " + rule.id + "]     "+userInput)
                             restart = True
                             break
 

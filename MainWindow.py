@@ -23,11 +23,14 @@ class Ui_MainWindow(object):
         self.resultsField.setGeometry(QtCore.QRect(10, 310, 761, 251))
         self.resultsField.setObjectName("resultsField")
         self.InputgroupBox = QtWidgets.QGroupBox(self.centralwidget)
-        self.InputgroupBox.setGeometry(QtCore.QRect(790, 290, 211, 121))
+        self.InputgroupBox.setGeometry(QtCore.QRect(790, 370, 211, 121))
         self.InputgroupBox.setObjectName("InputgroupBox")
         self.resultsGroupBox = QtWidgets.QGroupBox(self.centralwidget)
-        self.resultsGroupBox.setGeometry(QtCore.QRect(790, 430, 211, 51))
+        self.resultsGroupBox.setGeometry(QtCore.QRect(790, 500, 211, 51))
         self.resultsGroupBox.setObjectName("resultsGroupBox")
+        self.clearBt = QtWidgets.QPushButton(self.resultsGroupBox)
+        self.clearBt.setGeometry(QtCore.QRect(10, 20, 75, 23))
+        self.clearBt.setObjectName("clearBt")
         self.stringInput = QtWidgets.QLineEdit(self.InputgroupBox)
         self.stringInput.setGeometry(QtCore.QRect(10, 30, 191, 25))
         self.stringInput.setObjectName("stringInput")
@@ -38,9 +41,6 @@ class Ui_MainWindow(object):
         self.oneStepBt = QtWidgets.QPushButton(self.InputgroupBox)
         self.oneStepBt.setGeometry(QtCore.QRect(110, 80, 91, 21))
         self.oneStepBt.setObjectName("oneStepBt")
-        self.clearResults = QtWidgets.QPushButton(self.resultsGroupBox)
-        self.clearResults.setGeometry(QtCore.QRect(10, 20, 75, 23))
-        self.clearResults.setObjectName("clearResults")
 
         MainWindow.setCentralWidget(self.centralwidget)
 
@@ -169,6 +169,14 @@ class Ui_MainWindow(object):
         self.line.setFrameShape(QtWidgets.QFrame.VLine)
         self.line.setFrameShadow(QtWidgets.QFrame.Sunken)
         self.line.setObjectName("line")
+
+        #PARSE GROUP BOX
+        self.parsegroupBox = QtWidgets.QGroupBox(self.centralwidget)
+        self.parsegroupBox.setGeometry(QtCore.QRect(790, 310, 211, 51))
+        self.parsegroupBox.setObjectName("parsegroupBox")
+        self.parseBt = QtWidgets.QPushButton(self.parsegroupBox)
+        self.parseBt.setGeometry(QtCore.QRect(10, 20, 75, 23))
+        self.parseBt.setObjectName("parseBt")
         
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -210,7 +218,7 @@ class Ui_MainWindow(object):
         self.psibtn.clicked.connect(self.put_Psi)
         self.omegabtn.clicked.connect(self.put_Omega)
         self.arrowbtn.clicked.connect(self.put_Arrow)
-        self.clearResults.clicked.connect(self.clearField)
+        self.clearBt.clicked.connect(self.clearField)
 
         #INPUT OPTIONS EVENTS:
         self.actionMultiple_Inputs.triggered.connect(self.open_multi_inputs)
@@ -219,8 +227,6 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "Untitled"))
-        self.oneStepBt.setText(_translate("MainWindow", "One Step"))
-        self.runBt.setText(_translate("MainWindow", "Run"))
         self.menuFile.setTitle(_translate("MainWindow", "File"))
         self.menuInput.setTitle(_translate("MainWindow", "Input"))
         self.actionNew.setText(_translate("MainWindow", "New"))
@@ -257,9 +263,13 @@ class Ui_MainWindow(object):
         self.arrowbtn.setText(_translate("MainWindow", "\u2192"))
         self.InputgroupBox.setTitle(_translate("MainWindow", "Input"))
         self.stringInput.setPlaceholderText(_translate("MainWindow", "Enter String"))
+        self.runBt.setText(_translate("MainWindow", "Run"))
+        self.oneStepBt.setText(_translate("MainWindow", "One Step"))
         self.plainTextEdit.setPlaceholderText("#symbols abcdefghijklmnopqrstuvwxyz0123456789\n#vars x\n#markers β\nP1:βx → xβ (P1)\nP2:xβ → Λ.\nP3:x → βx (P1)")
         self.resultsGroupBox.setTitle(_translate("MainWindow", "Results Field"))
-        self.clearResults.setText(_translate("MainWindow", "Clear"))
+        self.clearBt.setText(_translate("MainWindow", "Clear"))
+        self.parsegroupBox.setTitle(_translate("MainWindow", "Parse Algorithm"))
+        self.parseBt.setText(_translate("MainWindow", "Parse"))
 
 
     #File Management Actions:
