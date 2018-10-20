@@ -20,22 +20,26 @@ class Markov(QMainWindow, Ui_MainWindow):
 
         #Event listeners for action buttons:
         self.runBt.clicked.connect(self.run)
-        self.ui.runInputsBt.clicked.connect(self.runMultipleInputs)        
+        self.ui.runInputsBt.clicked.connect(self.runMultipleInputs) 
+        self.actionOpenBt.       
 
 
     def run(self):
+        #Arrays are restarted...
         self.variables = [] 
         self.symbols = []
         self.markers = []
         self.rules = []
+
         userInput = self.getUserInput()
+
         self.load_algorithm()
         self.remove_symbols()
         self.execute_algorithm(userInput)
 
 
-    def runMultipleInputs(self):
-        multipleInputs = self.getItems()
+    def runMultipleInputs(self): #Run multiple inputs
+        multipleInputs = self.getMultipleInputs()
         for input in multipleInputs:
             self.resultsField.appendPlainText(input)
 
@@ -45,20 +49,20 @@ class Markov(QMainWindow, Ui_MainWindow):
         return input   
 
 
-    def getItems(self):
+    def getMultipleInputs(self):
         multipleInputs = []
         for item in self.ui.rows:
             if item.text() != '':
                 multipleInputs.append(item.text())
         return multipleInputs   
 
+
     def remove_symbols(self):
         for v in self.variables:
             if v in self.symbols:
                 self.symbols=self.symbols.replace(v,'')
-                
 
-
+    #Load algorithm parameters (Symbols, markers and etc...)
     def load_algorithm(self):
         lines = str(self.plainTextEdit.toPlainText()).splitlines()
         
@@ -75,7 +79,7 @@ class Markov(QMainWindow, Ui_MainWindow):
                         if re.match("^.+", line):
                             self.create_rule(line)
 
-
+    #Create a store algorithm rules
     def create_rule(self, line):
         rule = Rule()
 
@@ -134,7 +138,8 @@ class Markov(QMainWindow, Ui_MainWindow):
             rule.tag = reMatchForTag.group(0).replace(" ", "")
 
         self.rules.append(rule)             
-
+        
+    #execute the algorithm given an user input
     def execute_algorithm(self, userInput):
         restart = True
         while restart:
@@ -148,13 +153,13 @@ class Markov(QMainWindow, Ui_MainWindow):
                         
                         if rule.isFinal:
                             userInput=self.remove_null(userInput)
-                            self.resultsField.appendPlainText(userInput + "  Aplicando: " + rule.id)
-                            self.resultsField.appendPlainText("---------------------------")
+                            self.resultsField.appendPlainText(userInput + "    [Aplicando: " + rule.id + " Regla Final]")
+                            self.resultsField.appendPlainText("--------------------------------------------------------")
                             restart = False
                             break
                         else:
                             # userInput=self.remove_null(userInput)
-                            self.resultsField.appendPlainText(userInput + "  Aplicando: " + rule.id)
+                            self.resultsField.appendPlainText(userInput + "    [Aplicando: " + rule.id + "]")
                             restart = True
                             break
 
@@ -195,10 +200,6 @@ class Markov(QMainWindow, Ui_MainWindow):
             for i in range(0, len(nvars)):
                 substitution=substitution.replace(nvars[i], strvars[i])
 
-        # if len(nsubs) > 1:
-        #     strvars = self.variablesFromString(matchingString)
-        #     for i in range(0, len(nsubs)):
-        #         substitution=substitution.replace(nsubs[i], strvars[i])
         else:       
             for m in matchingString:
                 if m in self.symbols:
@@ -249,6 +250,7 @@ class Markov(QMainWindow, Ui_MainWindow):
                 strVariables.append(var)
 
         return strVariables
+
     
     def variablesFromPattern(self, pattern):
         patternVariables = [] #Pattern variables
