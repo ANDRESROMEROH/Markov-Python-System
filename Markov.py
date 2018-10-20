@@ -18,11 +18,13 @@ class Markov(QMainWindow, Ui_MainWindow):
         self.markers = []
         self.rules = []
         self.isParse=False
+        self.debug=False
 
         #Event listeners for action buttons:
         self.runBt.clicked.connect(self.run)
         self.ui.runInputsBt.clicked.connect(self.runMultipleInputs) 
         self.parseBt.clicked.connect(self.parseAlgorithm)
+        self.oneStepBt.clicked.connect(self.oneStepFlag)
              
 
     def verifyParse(self):
@@ -181,18 +183,28 @@ class Markov(QMainWindow, Ui_MainWindow):
                             break
 
                 else: 
+                    userInput = self.nullrule(rule.pattern,userInput)
                     if rule.pattern in userInput:
                         userInput = self.processRuleCase2(rule, userInput)
 
                         if rule.isFinal:
                             userInput=self.remove_null(userInput)
-                            self.resultsField.appendPlainText(userInput)
-
+                            if(rule.id != None):
+                                self.resultsField.appendPlainText("[Aplicando: " + rule.id + " Regla Final]     "+userInput)
+                            else:   
+                                self.resultsField.appendPlainText(userInput)
+                            self.resultsField.appendPlainText("--------------------------------------------------------")
+                            restart = False
                             break
                         else:
                             userInput=self.remove_null(userInput)
                             userInput=userInput.replace('"',"")
-                            self.resultsField.appendPlainText(userInput)
+                            if(rule.id != None):
+                                self.resultsField.appendPlainText("[Aplicando: " + rule.id + "]     "+userInput)
+                            else:
+                                self.resultsField.appendPlainText(userInput)
+                            restart = True
+                            break
                 
                 restart = False
 
@@ -277,6 +289,10 @@ class Markov(QMainWindow, Ui_MainWindow):
                 patternVariables.append(var)
 
         return patternVariables
+    
+    def oneStepFlag(self):
+        self.debug=True
+
 
 
 ####################### APPLICATION MAIN(): ###########################
