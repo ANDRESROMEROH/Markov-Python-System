@@ -1,0 +1,7 @@
+#symbols abcd
+P1:ba → ab
+P2:ca → ac
+P3:da → ad
+P4:cb → bc
+P5:db → bd
+P6:dc → cd
