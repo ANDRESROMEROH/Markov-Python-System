@@ -41,17 +41,15 @@ class Markov(QMainWindow, Ui_MainWindow):
         self.load_algorithm()
         self.remove_symbols()
 
-    #Popup that shows an error message if the algorithm is not parsed.
-    def errorMsg(self):
-        msg = QMessageBox(self.mainWindow)
-        msg.setText("You cannot execute the algorithm before parsing it")
-        msg.setInformativeText("Please click the parse button")
-        msg.setWindowTitle("We are sorry!")
-        msg.exec_()
+        if self.rules != []:
+            self.windowMsg("Success", "Algorithm parsed successfully!", "All the parameters were loaded.")
+        else:
+            self.windowMsg("Error", "Ups! There was a problem.", "Please make sure the algorithm is not in BLANK.")
+
 
     def run(self):
-        if self.verifyParse() ==False:
-            self.errorMsg()
+        if self.verifyParse() == False:
+            self.windowMsg("We are sorry!", "You cannot execute the algorithm before parsing it", "We are sorry!")
         else:
             userInput = self.getUserInput()
             self.execute_algorithm(userInput)

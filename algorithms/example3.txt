@@ -1,0 +1,7 @@
+#symbols abcd
+#vars x
+#markers αβ
+P1:β → Λ.
+P2:xαα → β
+P3:αx → xα
+P4:Λ → α
