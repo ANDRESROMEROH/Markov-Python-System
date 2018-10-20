@@ -56,9 +56,15 @@ class Markov(QMainWindow, Ui_MainWindow):
 
 
     def runMultipleInputs(self): #Run multiple inputs
-        multipleInputs = self.getMultipleInputs()
-        for input in multipleInputs:
-            self.resultsField.appendPlainText(input)
+        if self.verifyParse() == False:
+            self.windowMsg("We are sorry!", "You cannot execute the algorithm before parsing it", "We are sorry!")
+        else:
+            multipleInputs = self.getMultipleInputs()
+            for input in multipleInputs:
+                self.resultsField.appendPlainText("*RUNNING INPUT: " + input + "\n")
+                self.execute_algorithm(input)
+            
+            self.mainWindow.raise_()
 
     
     def getUserInput(self):
@@ -95,6 +101,7 @@ class Markov(QMainWindow, Ui_MainWindow):
                     else:
                         if re.match("^.+", line):
                             self.create_rule(line)
+
 
     #Create a store algorithm rules
     def create_rule(self, line):
@@ -154,7 +161,8 @@ class Markov(QMainWindow, Ui_MainWindow):
         if reMatchForTag : #If the rule has an id
             rule.tag = reMatchForTag.group(0).replace(" ", "")
 
-        self.rules.append(rule)             
+        self.rules.append(rule)         
+
         
     #execute the algorithm given an user input
     def execute_algorithm(self, userInput):
@@ -170,8 +178,11 @@ class Markov(QMainWindow, Ui_MainWindow):
                         
                         if rule.isFinal:
                             userInput=self.remove_null(userInput)
-                            self.resultsField.appendPlainText("[Aplicando: " + rule.id + " Regla Final]     "+userInput)
-                            self.resultsField.appendPlainText("--------------------------------------------------------")
+                            self.resultsField.appendPlainText("[Aplicando: " + rule.id + " Regla Final]     " + userInput + "\n")
+
+                            self.resultsField.appendPlainText("-----------------------------------------" 
+                            + "-------------------------------------------------------------------------")
+
                             restart = False
                             break
                         else:
@@ -188,17 +199,20 @@ class Markov(QMainWindow, Ui_MainWindow):
                         if rule.isFinal:
                             userInput=self.remove_null(userInput)
                             if(rule.id != None):
-                                self.resultsField.appendPlainText("[Aplicando: " + rule.id + " Regla Final]     "+userInput)
+                                self.resultsField.appendPlainText("[Aplicando: " + rule.id + " Regla Final]     " + userInput + "\n")
                             else:   
                                 self.resultsField.appendPlainText(userInput)
-                            self.resultsField.appendPlainText("--------------------------------------------------------")
-                            restart = False
-                            break
+
+                                self.resultsField.appendPlainText("-----------------------------------------" 
+                                + "-------------------------------------------------------------------------")
+                                
+                                restart = False
+                                break
                         else:
                             userInput=self.remove_null(userInput)
                             userInput=userInput.replace('"',"")
                             if(rule.id != None):
-                                self.resultsField.appendPlainText("[Aplicando: " + rule.id + "]     "+userInput)
+                                self.resultsField.appendPlainText("[Aplicando: " + rule.id + "]     "+ userInput + "\n")
                             else:
                                 self.resultsField.appendPlainText(userInput)
                             restart = True

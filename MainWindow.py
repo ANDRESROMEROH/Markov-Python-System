@@ -10,7 +10,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.setFixedSize(1014, 605)
-
+        
         self.currentFile = ""
 
         self.centralwidget = QtWidgets.QWidget(MainWindow)
