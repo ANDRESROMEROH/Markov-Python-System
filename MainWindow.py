@@ -25,23 +25,25 @@ class Ui_MainWindow(object):
         self.InputgroupBox = QtWidgets.QGroupBox(self.centralwidget)
         self.InputgroupBox.setGeometry(QtCore.QRect(790, 290, 211, 121))
         self.InputgroupBox.setObjectName("InputgroupBox")
-        self.stringInput = QtWidgets.QLineEdit(self.InputgroupBox)
-        self.stringInput.setGeometry(QtCore.QRect(10, 30, 191, 25))
-        self.stringInput.setObjectName("stringInput")
-        self.oneStepBt = QtWidgets.QPushButton(self.InputgroupBox)
-        self.oneStepBt.setGeometry(QtCore.QRect(110, 80, 91, 21))
-        self.oneStepBt.setObjectName("oneStepBt")
         self.resultsGroupBox = QtWidgets.QGroupBox(self.centralwidget)
         self.resultsGroupBox.setGeometry(QtCore.QRect(790, 430, 211, 51))
         self.resultsGroupBox.setObjectName("resultsGroupBox")
-        self.clearResults = QtWidgets.QPushButton(self.resultsGroupBox)
-        self.clearResults.setGeometry(QtCore.QRect(10, 20, 75, 23))
-        self.clearResults.setObjectName("clearResults")
+        self.stringInput = QtWidgets.QLineEdit(self.InputgroupBox)
+        self.stringInput.setGeometry(QtCore.QRect(10, 30, 191, 25))
+        self.stringInput.setObjectName("stringInput")
         self.runBt = QtWidgets.QPushButton(self.InputgroupBox)
         self.runBt.setGeometry(QtCore.QRect(10, 80, 91, 21))
         self.runBt.setAutoFillBackground(False)
         self.runBt.setObjectName("runBt")
+        self.oneStepBt = QtWidgets.QPushButton(self.InputgroupBox)
+        self.oneStepBt.setGeometry(QtCore.QRect(110, 80, 91, 21))
+        self.oneStepBt.setObjectName("oneStepBt")
+        self.clearResults = QtWidgets.QPushButton(self.resultsGroupBox)
+        self.clearResults.setGeometry(QtCore.QRect(10, 20, 75, 23))
+        self.clearResults.setObjectName("clearResults")
+
         MainWindow.setCentralWidget(self.centralwidget)
+
         self.groupPalette = QtWidgets.QGroupBox(self.centralwidget)
         self.groupPalette.setGeometry(QtCore.QRect(790, 10, 211, 271))
         self.groupPalette.setObjectName("groupPalette")
@@ -52,10 +54,12 @@ class Ui_MainWindow(object):
         self.menuFile.setObjectName("menuFile")
         self.menuInput = QtWidgets.QMenu(self.menubar)
         self.menuInput.setObjectName("menuInput")
+
         MainWindow.setMenuBar(self.menubar)
 
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
+
         MainWindow.setStatusBar(self.statusbar)
 
         self.actionNew = QtWidgets.QAction(MainWindow)
@@ -337,8 +341,9 @@ class Ui_MainWindow(object):
         self.currentFile = ""
         self.mainWindow.setWindowTitle("Untitled")
 
-    def clearField(self):
-        self.resultsField.clear()
+    #End File Management Actions ########################################
+
+    #Palette Buttons and Actions:
 
     def put_Alfa(self):
         self.plainTextEdit.insertPlainText("\u03B1")
@@ -443,6 +448,15 @@ class Ui_MainWindow(object):
     def put_Arrow(self):
         self.plainTextEdit.insertPlainText("\u2192")
         self.plainTextEdit.setFocus()
+
+# End Pallete Buttons #################################
+
+# Result Fields Actions:
+
+    def clearField(self):
+        self.resultsField.clear()
+
+#End Result Fields Actions #############################
 
 
 ############################## Multiple Inputs GUI:

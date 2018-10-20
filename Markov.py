@@ -21,7 +21,7 @@ class Markov(QMainWindow, Ui_MainWindow):
         #Event listeners for action buttons:
         self.runBt.clicked.connect(self.run)
         self.ui.runInputsBt.clicked.connect(self.runMultipleInputs) 
-        self.actionOpenBt.       
+             
 
 
     def run(self):
