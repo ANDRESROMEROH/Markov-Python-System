@@ -39,6 +39,7 @@ class Markov(QMainWindow, Ui_MainWindow):
         self.load_algorithm()
         self.remove_symbols()
 
+    #Popup that shows an error message if the algorithm is not parsed.
     def errorMsg(self):
         msg = QMessageBox(self.mainWindow)
         msg.setText("You cannot execute the algorithm before parsing it")
@@ -72,7 +73,7 @@ class Markov(QMainWindow, Ui_MainWindow):
                 multipleInputs.append(item.text())
         return multipleInputs   
 
-
+    #Remove variables from symbols array
     def remove_symbols(self):
         for v in self.variables:
             if v in self.symbols:
@@ -196,21 +197,22 @@ class Markov(QMainWindow, Ui_MainWindow):
                 restart = False
 
 
-    def processRuleCase1(self, regex, rule, userInput): #Process rules which pattern contains variables...  
+    def processRuleCase1(self, regex, rule, userInput): #Process rules which pattern contains variables. 
         #Below line extracts the matching part of the input string:
         matchingString = regex.search(userInput).group(0) 
         #Below line applies the substitution:
         return re.sub(regex, self.applySubstitution(matchingString, rule.pattern, rule.substitution), userInput, 1) 
     
 
-    def processRuleCase2(self, rule, userInput): #Process rules which pattern doesn't contain variables...
+    def processRuleCase2(self, rule, userInput): #Process rules which pattern doesn't contain variables.
         return userInput.replace(rule.pattern, rule.substitution, 1)
         
-
+     #Substitute the rule pattern with its rule substitution
     def applySubstitution(self, matchingString ,pattern, substitution):     
         nvars = self.variablesFromPattern(pattern)
         nsubs = self.variablesFromString(substitution)
-
+       
+        #When the pattern has more than one variable in it
         if len(nvars) > 1:
             strvars = self.variablesFromString(matchingString)
             for i in range(0, len(nvars)):
@@ -221,24 +223,23 @@ class Markov(QMainWindow, Ui_MainWindow):
                 if m in self.symbols:
                     for s in substitution:
                         if s in self.variables:
-                            # modifique quitando el 1 de aca
                             substitution = substitution.replace(s, m)
                             break
         
         return substitution
 
-    def getRuleRegex(self, rule): #Return the regex of a given rule..
+    def getRuleRegex(self, rule): #Return the regex of a given rule.
         patternVariables = self.containsVariable(rule.pattern)
         regex = rule.pattern
 
         if patternVariables:
             for var in patternVariables: 
-                #Below line constructs a regex based on the symbols and markers found on the pattern:
+                #Below line constructs a regex based on the symbols and markers found on the pattern
                 regex = regex.replace(var, "[" + self.symbols + "]", 1)
         
         return re.compile(regex, re.IGNORECASE | re.UNICODE)
 
-
+    #Returns an array with the variables that are in the given pattern
     def containsVariable(self, pattern):
         patternVariables = [] #Pattern variables
         for var in self.variables:
@@ -247,18 +248,19 @@ class Markov(QMainWindow, Ui_MainWindow):
 
         return patternVariables
 
+    #Returns the input without any null symbol
     def remove_null(self,input):
         if "\u039B" in input:
             input=input.replace("\u039B","")
         return input
 
-    
+    #If theres a pattern with a null symbol, this function returns the input concatenate with that symbol
     def nullrule(self,pattern,userInput):
         if "\u039B" ==pattern:
             userInput="\u039B"+userInput
         return userInput
 
-
+    #Returns an array with the variables that are in the given matching string
     def variablesFromString(self, matchingString):
         strVariables = [] #Matching string variables
         for var in matchingString:
@@ -267,7 +269,7 @@ class Markov(QMainWindow, Ui_MainWindow):
 
         return strVariables
 
-    
+    #Returns an array with the variables that are in the given pattern in order in which they appear
     def variablesFromPattern(self, pattern):
         patternVariables = [] #Pattern variables
         for var in pattern:
