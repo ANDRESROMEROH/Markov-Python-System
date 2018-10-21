@@ -182,7 +182,7 @@ class Markov(QMainWindow, Ui_MainWindow):
                         
                         if rule.isFinal:
                             userInput=self.remove_null(userInput)
-                            self.resultsField.appendPlainText("[Aplicando: " + rule.id + " Regla Final]     " + userInput + "\n")
+                            self.resultsField.appendPlainText("[After " + rule.id + " Final Rule]:     " + userInput + "\n")
 
                             self.resultsField.appendPlainText("-----------------------------------------" 
                             + "-------------------------------------------------------------------------")
@@ -191,7 +191,7 @@ class Markov(QMainWindow, Ui_MainWindow):
                             break
                         else:
                             # userInput=self.remove_null(userInput)
-                            self.resultsField.appendPlainText("[Aplicando: " + rule.id + "]     "+userInput)
+                            self.resultsField.appendPlainText("[After " + rule.id + "]:     "+userInput)
                             restart = True
                             break
 
@@ -203,7 +203,7 @@ class Markov(QMainWindow, Ui_MainWindow):
                         if rule.isFinal:
                             userInput=self.remove_null(userInput)
                             if(rule.id != None):
-                                self.resultsField.appendPlainText("[Aplicando: " + rule.id + " Regla Final]     " + userInput + "\n")
+                                self.resultsField.appendPlainText("[After " + rule.id + " Final Rule]:     " + userInput + "\n")
 
                             else:   
                                 self.resultsField.appendPlainText(userInput)
@@ -216,7 +216,7 @@ class Markov(QMainWindow, Ui_MainWindow):
                             userInput=self.remove_null(userInput)
                             userInput=userInput.replace('"',"")
                             if(rule.id != None):
-                                self.resultsField.appendPlainText("[Aplicando: " + rule.id + "]     "+ userInput + "\n")
+                                self.resultsField.appendPlainText("[After " + rule.id + "]:     "+ userInput + "\n")
                             else:
                                 self.resultsField.appendPlainText(userInput)
                             restart = True
