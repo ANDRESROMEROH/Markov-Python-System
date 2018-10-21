@@ -7,7 +7,7 @@ from InputsGui import Ui_multiInputsDialog
 
 class Ui_MainWindow(object):
     
-    def setupUi(self, MainWindow):
+    def setupUi(self, MainWindow): #Application Interface
         MainWindow.setObjectName("MainWindow")
         MainWindow.setFixedSize(1014, 605)
         
