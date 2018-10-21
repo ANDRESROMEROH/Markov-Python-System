@@ -1,0 +1,15 @@
+#symbols abcdefghijklmnopqrstuvwxyz0123456789
+#vars xy
+#markers β
+P1:xεy → xy
+P2:βxy → yβx
+P3:εβx → εβ
+P4:xεβ → εβ
+P5:εβ → "Verdadero"
+P6:βx → xβ
+P7:αxβΛ → α
+P8:xxβ → ε
+P9:xyβ → α
+P10:αβ → "Falso"
+P11:xβ → "Verdadero"
+P12:x → βx

@@ -326,15 +326,15 @@ class Ui_MainWindow(object):
 
                 with file:    
                     file.write(information)
+                    self.currentFile = path[0]
+                    self.mainWindow.setWindowTitle(file.name.split("/")[-1])
 
             except Exception as error:
                 raise Exception("There was an error saving the file: ".format(error))
             
             finally:
                 return None
-
-            self.currentFile = path[0]
-            self.mainWindow.setWindowTitle(file.name.split("/")[-1])
+    
         
         else:
             msg = QMessageBox(self.centralwidget)
