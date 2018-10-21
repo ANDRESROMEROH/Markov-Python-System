@@ -54,6 +54,8 @@ class Ui_MainWindow(object):
         self.menuFile.setObjectName("menuFile")
         self.menuInput = QtWidgets.QMenu(self.menubar)
         self.menuInput.setObjectName("menuInput")
+        self.menuResults = QtWidgets.QMenu(self.menubar)
+        self.menuResults.setObjectName("menuResults")
 
         MainWindow.setMenuBar(self.menubar)
 
@@ -73,16 +75,18 @@ class Ui_MainWindow(object):
         self.actionSaveAs.setObjectName("actionSaveAs")
         self.actionMultiple_Inputs = QtWidgets.QAction(MainWindow)
         self.actionMultiple_Inputs.setObjectName("actionMultiple_Inputs")
-        self.actionPalette = QtWidgets.QAction(MainWindow)
-        self.actionPalette.setObjectName("actionPalette")
+        self.actionSaveResultsLog = QtWidgets.QAction(MainWindow)
+        self.actionSaveResultsLog.setObjectName("actionSaveResultsLog")
         self.menuFile.addAction(self.actionNew)
         self.menuFile.addAction(self.actionOpen)
         self.menuFile.addSeparator()
         self.menuFile.addAction(self.actionSave)
         self.menuFile.addAction(self.actionSaveAs) 
         self.menuInput.addAction(self.actionMultiple_Inputs)
+        self.menuResults.addAction(self.actionSaveResultsLog)
         self.menubar.addAction(self.menuFile.menuAction())
         self.menubar.addAction(self.menuInput.menuAction())
+        self.menubar.addAction(self.menuResults.menuAction())
 
         #Palette
         self.alfabtn = QtWidgets.QPushButton(self.groupPalette)
@@ -222,6 +226,9 @@ class Ui_MainWindow(object):
 
         #INPUT OPTIONS EVENTS:
         self.actionMultiple_Inputs.triggered.connect(self.open_multi_inputs)
+        #RESULTS OPTIONS EVENTS:
+        self.actionSaveResultsLog.triggered.connect(self.save_Results)
+
 
 
     def retranslateUi(self, MainWindow):
@@ -229,11 +236,13 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(_translate("MainWindow", "Untitled"))
         self.menuFile.setTitle(_translate("MainWindow", "File"))
         self.menuInput.setTitle(_translate("MainWindow", "Input"))
+        self.menuResults.setTitle(_translate("MainWindow", "Results"))
         self.actionNew.setText(_translate("MainWindow", "New"))
         self.actionOpen.setText(_translate("MainWindow", "Open"))
         self.actionSave.setText(_translate("MainWindow", "Save"))
         self.actionSaveAs.setText(_translate("MainWindow", "Save As"))
         self.actionMultiple_Inputs.setText(_translate("MainWindow", "Multiple Inputs"))
+        self.actionSaveResultsLog.setText(_translate("MainWindow", "Save Results Log"))
         self.groupPalette.setTitle(_translate("MainWindow", "Palette"))
         self.alfabtn.setText(_translate("MainWindow", "\u03B1"))
         self.betabtn.setText(_translate("MainWindow", "\u03B2"))
@@ -307,6 +316,9 @@ class Ui_MainWindow(object):
 
             except Exception as error:
                 raise Exception("There was an error saving the file: ".format(error))
+            
+            finally:
+                return None
 
             self.currentFile = path[0]
             self.mainWindow.setWindowTitle(file.name.split("/")[-1])
@@ -464,6 +476,33 @@ class Ui_MainWindow(object):
 
 # Result Fields Actions:
 
+    def save_Results(self):
+        results = self.resultsField.toPlainText()
+        
+        if results:
+
+            path = QFileDialog.getSaveFileName(self.menuFile, 'Save As', os.getenv('HOME'), 'TXT(*.txt)')
+            
+            try:
+                file = codecs.open(path[0],'w', encoding='UTF-8')
+
+                with file:    
+                    file.write(results)
+
+            except Exception as error:
+                raise Exception("There was an error saving the results: ".format(error))
+            
+            finally:
+                return None
+        
+        else:
+            msg = QMessageBox(self.centralwidget)
+            msg.setText("There are NO Result Logs")
+            msg.setInformativeText("Please make sure you process something before.")
+            msg.setWindowTitle("Error")
+            msg.exec_()
+
+
     def clearField(self):
         self.resultsField.clear()
 
@@ -478,7 +517,6 @@ class Ui_MainWindow(object):
         msg.setText(text)
         msg.setInformativeText(info)
         msg.exec_()
-
 
 ############################## Multiple Inputs GUI:
 

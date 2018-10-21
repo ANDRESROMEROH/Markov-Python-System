@@ -25,13 +25,14 @@ class Markov(QMainWindow, Ui_MainWindow):
         self.ui.runInputsBt.clicked.connect(self.runMultipleInputs) 
         self.parseBt.clicked.connect(self.parseAlgorithm)
         self.oneStepBt.clicked.connect(self.oneStepFlag)
-             
+
 
     def verifyParse(self):
         if self.rules != []:
             self.isParse=True
         return self.isParse
     
+
     def parseAlgorithm(self):
         #Arrays are restarted...
         self.variables = [] 
@@ -79,11 +80,13 @@ class Markov(QMainWindow, Ui_MainWindow):
                 multipleInputs.append(item.text())
         return multipleInputs   
 
+
     #Remove variables from symbols array
     def remove_symbols(self):
         for v in self.variables:
             if v in self.symbols:
                 self.symbols=self.symbols.replace(v,'')
+
 
     #Load algorithm parameters (Symbols, markers and etc...)
     def load_algorithm(self):
@@ -231,6 +234,7 @@ class Markov(QMainWindow, Ui_MainWindow):
     def processRuleCase2(self, rule, userInput): #Process rules which pattern doesn't contain variables.
         return userInput.replace(rule.pattern, rule.substitution, 1)
         
+
      #Substitute the rule pattern with its rule substitution
     def applySubstitution(self, matchingString ,pattern, substitution):     
         nvars = self.variablesFromPattern(pattern)
@@ -252,6 +256,7 @@ class Markov(QMainWindow, Ui_MainWindow):
         
         return substitution
 
+
     def getRuleRegex(self, rule): #Return the regex of a given rule.
         patternVariables = self.containsVariable(rule.pattern)
         regex = rule.pattern
@@ -263,6 +268,7 @@ class Markov(QMainWindow, Ui_MainWindow):
         
         return re.compile(regex, re.IGNORECASE | re.UNICODE)
 
+
     #Returns an array with the variables that are in the given pattern
     def containsVariable(self, pattern):
         patternVariables = [] #Pattern variables
@@ -272,17 +278,20 @@ class Markov(QMainWindow, Ui_MainWindow):
 
         return patternVariables
 
+
     #Returns the input without any null symbol
     def remove_null(self,input):
         if "\u039B" in input:
             input=input.replace("\u039B","")
         return input
 
+
     #If theres a pattern with a null symbol, this function returns the input concatenate with that symbol
     def nullrule(self,pattern,userInput):
         if "\u039B" ==pattern:
             userInput="\u039B"+userInput
         return userInput
+
 
     #Returns an array with the variables that are in the given matching string
     def variablesFromString(self, matchingString):
@@ -293,6 +302,7 @@ class Markov(QMainWindow, Ui_MainWindow):
 
         return strVariables
 
+
     #Returns an array with the variables that are in the given pattern in order in which they appear
     def variablesFromPattern(self, pattern):
         patternVariables = [] #Pattern variables
@@ -301,6 +311,7 @@ class Markov(QMainWindow, Ui_MainWindow):
                 patternVariables.append(var)
 
         return patternVariables
+    
     
     def oneStepFlag(self):
         self.debug=True
