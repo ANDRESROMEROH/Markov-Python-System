@@ -18,13 +18,11 @@ class Markov(QMainWindow, Ui_MainWindow):
         self.markers = []
         self.rules = []
         self.isParse=False
-        self.currentString= None
 
         #Event listeners for action buttons:
         self.runBt.clicked.connect(self.run)
         self.ui.runInputsBt.clicked.connect(self.runMultipleInputs) 
         self.parseBt.clicked.connect(self.parseAlgorithm)
-        # self.oneStepBt.clicked.connect(self.oneStepFlag)
 
 
     def verifyParse(self):
@@ -213,7 +211,6 @@ class Markov(QMainWindow, Ui_MainWindow):
                                 self.resultsField.appendPlainText("-----------------------------------------" 
                                 + "-------------------------------------------------------------------------")
                             restart = False
-                            print(restart)
                             break
                         else:
                             userInput=self.remove_null(userInput)

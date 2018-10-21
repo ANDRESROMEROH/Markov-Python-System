@@ -38,9 +38,6 @@ class Ui_MainWindow(object):
         self.runBt.setGeometry(QtCore.QRect(10, 80, 91, 21))
         self.runBt.setAutoFillBackground(False)
         self.runBt.setObjectName("runBt")
-        self.oneStepBt = QtWidgets.QPushButton(self.InputgroupBox)
-        self.oneStepBt.setGeometry(QtCore.QRect(110, 80, 91, 21))
-        self.oneStepBt.setObjectName("oneStepBt")
 
         MainWindow.setCentralWidget(self.centralwidget)
 
@@ -290,7 +287,6 @@ class Ui_MainWindow(object):
         self.InputgroupBox.setTitle(_translate("MainWindow", "Input"))
         self.stringInput.setPlaceholderText(_translate("MainWindow", "Enter String"))
         self.runBt.setText(_translate("MainWindow", "Run"))
-        self.oneStepBt.setText(_translate("MainWindow", "One Step"))
         self.plainTextEdit.setPlaceholderText("#symbols abcdefghijklmnopqrstuvwxyz0123456789\n#vars x\n#markers β\nP1:βx → xβ (P1)\nP2:xβ → Λ.\nP3:x → βx (P1)")
         self.resultsField.setPlaceholderText("Your results will show in here...")
         self.resultsGroupBox.setTitle(_translate("MainWindow", "Results Field"))
