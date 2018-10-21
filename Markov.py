@@ -102,8 +102,11 @@ class Markov(QMainWindow, Ui_MainWindow):
                     if re.match("#markers", line):
                         self.markers = re.sub("^\#markers", "", line).replace(" ", "")
                     else:
-                        if re.match("^.+", line):
-                            self.create_rule(line)
+                        if re.match("%",line):
+                            pass
+                        else:
+                            if re.match("^.+", line):
+                                self.create_rule(line)
 
 
     #Create a store algorithm rules
