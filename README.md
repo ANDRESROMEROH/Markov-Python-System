@@ -29,7 +29,7 @@ To run the program from the bash console you will need to specify the Python ver
 
     python3 Markov.py
 
-It can be done this way or set Python3 as the defualt for the intruction `python` using the command `python Markov.py` and then running `
+It can be done this way or setting Python3 as the default for the intruction `python` using the command `python Markov.py` and then running `
 source ~/.bash_aliases or source ~/.bashrc`
 
 **Usage**
@@ -40,11 +40,11 @@ Using the program is very simple, if you don't know anything about Markov Algori
 Or the documentation available on Wikipedia which is very good actually:
 **https://en.wikipedia.org/wiki/Markov_algorithm**
 
-With that you should be all set up, let's take a look to the user interface:
+With that you should be all set, let's take a look into the user interface:
 
 ![enter image description here](https://lh3.googleusercontent.com/lXj1GKoQDjmLjePoNownuhiTk37GtiU0SQEYsgR8ODMPHG85kRjlSIqdUjBEOTOKj6y_8M7A5g9O "User Interface")
 
-You can either work "Live" just typing your algorithms on the editor section or load an predefined algorithm from a **.TXT** file, the algorithms will need to follow the convention shown as water mark in the editor section, let's see 2 different examples to see its work:
+You can either work "Live" just typing your algorithms on the editor section or loading a predefined algorithm from a **.TXT** file, the algorithms will need to follow the convention shown as water mark in the editor section, let's see 2 different examples to see its work:
 
 **Algorithm #1:**
 
