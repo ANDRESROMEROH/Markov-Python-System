@@ -61,9 +61,6 @@ It will produce the Output:
 
 > I bought a bag of apples from the shop.
 
-
-![enter image description here](https://lh3.googleusercontent.com/sXsOU8854VrUlgdJ2zs8BrvQ276vKAfEZ4Kxes4J8CoWNY_pk9jbC6fDexfVAgP02G9aQAmS5pmx)
-
 You can also create and run more complex algorithms using aux variables, symbols, markers an different rules as can be observed on algorithm #2.
 
 **Algorithm #2:**
