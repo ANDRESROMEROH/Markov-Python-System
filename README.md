@@ -95,8 +95,6 @@ It will produce the output:
 
 > elephantelephant
 
-![enter image description here](https://lh3.googleusercontent.com/9V-PrR6D62mzu05BNaPIcz5lFGmKe3boIJpRFn0Me070JvfP3lW_8wgEwC478B6Vd6BDdT3812OO)
-
 These are just 2 of the examples that can be executed within the app, development is still opened and there might be new algorithms which have not been tested.
 
 Enjoy!...
