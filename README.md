@@ -1,4 +1,4 @@
-## Markov-Pytho-App
+## Markov-Python-App
 Python (**QT GUI**) application that can emulate and create output strings as result of the application of a series of rules and input strings based on the known "Markov algorithm".
 
 In order to install the **PyQT** development tools you can follow:
@@ -33,7 +33,7 @@ To run the program from the bash console you will need to specify the Python ver
 It can be done this way or setting Python3 as the default for the intruction `python` using the command `python Markov.py` and then running `
 source ~/.bash_aliases or source ~/.bashrc`
 
-**How To**
+**How To:**
 -
 Using the program is very simple, if you don't know anything about Markov Algorithms you can get started with this **Medium** post: 
 **https://unnikked.ga/how-to-execute-a-markov-algorithm-7b59834eb2b5** 
