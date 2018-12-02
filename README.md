@@ -2,6 +2,7 @@
 Python (**QT GUI**) application that can emulate and create output strings as result of the application of a series of rules and input strings based on the known "Markov algorithm".
 
 In order to install the **PyQT** development tools you can follow:
+
 **https://gist.github.com/ANDRESROMEROH/9d252fb502c841769877fc8cdbf6943d**
 
 You can either run the **.EXE** file that is on the same project or run it directly using Python from your terminal:
@@ -66,6 +67,7 @@ It will produce the Output:
 You can also create and run more complex algorithms using aux variables, symbols, markers an different rules as can be observed on algorithm #2.
 
 **Algorithm #2:**
+
 Algorithm that duplicates a given string...
 
     #symbols abcdefghijklmnopqrstuvwxyz0123456789
