@@ -41,10 +41,6 @@ Using the program is very simple, if you don't know anything about Markov Algori
 Or the documentation available on Wikipedia which is pretty good:
 **https://en.wikipedia.org/wiki/Markov_algorithm**
 
-With that you should be all set, let's take a look into the user interface:
-
-![enter image description here](https://lh3.googleusercontent.com/lXj1GKoQDjmLjePoNownuhiTk37GtiU0SQEYsgR8ODMPHG85kRjlSIqdUjBEOTOKj6y_8M7A5g9O "User Interface")
-
 You can either work just typing your algorithms on the editor section or loading a predefined algorithm from a **.TXT** file, the algorithms will need to follow the convention shown as a water mark in the editor section, let's see 2 different examples to see its work:
 
 **Algorithm #1:**
