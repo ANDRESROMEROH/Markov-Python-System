@@ -1,5 +1,5 @@
 ## Markov-Python-App
-Python (**QT GUI**) application that can emulate and create output strings as result of the application of a series of rules and input strings based on the known "Markov algorithm".
+Python application that can create output strings as result of the application of a series of rules based on the known Markov's algorithm.
 
 In order to install the **PyQT** development tools you can follow:
 
@@ -35,7 +35,7 @@ source ~/.bash_aliases or source ~/.bashrc`
 
 **How To:**
 -
-Using the program is very simple, if you don't know anything about Markov Algorithms you can get started with this **Medium** post: 
+Using the applications is very simple, if you don't know anything about Markov's Algorithm you can get started with this **Medium** post: 
 **https://unnikked.ga/how-to-execute-a-markov-algorithm-7b59834eb2b5** 
 
 Or the documentation available on Wikipedia which is pretty good:
@@ -87,12 +87,3 @@ Using the string:
 It will produce the output:
 
 > elephantelephant
-
-These are just 2 of the examples that can be executed within the app, development is still opened and there might be new algorithms which have not been tested.
-
-Enjoy!...
-
-**Support:**
--
-andres.romero22@outlook.com
-
