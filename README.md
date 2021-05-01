@@ -1,11 +1,9 @@
 ## Markov-Python-App
-Python application that can create output strings as result of the application of a series of rules based on the known Markov's algorithm.
+Python application that creates output strings as result of the application of a series of rules based on the known Markov's algorithm.
 
-In order to install the **PyQT** development tools you can follow:
+In order to install the **PyQT** development tools follow:
 
 **https://gist.github.com/ANDRESROMEROH/9d252fb502c841769877fc8cdbf6943d**
-
-You can either run the **.EXE** file that is on the same project or run it directly using Python from your terminal:
 
 **For Windows:**
 -
@@ -20,13 +18,13 @@ From your command line / integrated console, locate the project root folder and 
 
 **For Linux/Unix:**
 -
-Just as in Windows you need to make sure you are running version 3.0.x of Python, some versions of Ubuntu comes with Python 2 by default which will cause issues with the GUI.
+Same as Windows you need to make sure you are running version 3.0.x of Python, some versions of Ubuntu comes with Python 2 by default which will cause issues with the GUI.
 
 Python 3 Linux installation command:
 
     sudo apt-get install python3.6
 
-To run the program from the bash console you will need to specify the Python version or it will run on Python 2 automatically, locate the project root folder and run:
+To run the program from the bash console you will need to specify the Python version or it will run on Python 2 by default, locate the project root folder and run:
 
     python3 Markov.py
 
